@@ -6,6 +6,7 @@ class Play extends Phaser.Scene {
     preload() {
         this.load.image('background', './assets/tempBackground.png');
         this.load.image('player', './assets/player.png');
+        this.load.image('enemy', './assets/enemy.png');
     }
 
     create() {
@@ -16,6 +17,7 @@ class Play extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         // create player sprite
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
+        this.enem = new Enemy(this, game.config.width/2, game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
     }
 
     update() {
@@ -24,5 +26,6 @@ class Play extends Phaser.Scene {
 
         // update player positon
         this.player.update();
+        this.enem.update();
     }
 }

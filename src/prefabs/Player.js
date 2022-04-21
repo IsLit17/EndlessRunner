@@ -8,10 +8,10 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        if (this.keyLeft.isDown) {
+        if (this.keyLeft.isDown && this.x >= borderUISize + this.width) {
             this.x -= this.moveSpeed;
         }
-        if (this.keyRight.isDown) {
+        if (this.keyRight.isDown && this.x <= game.config.width - borderUISize - this.width) {
             this.x += this.moveSpeed;
         }
     }

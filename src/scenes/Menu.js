@@ -5,5 +5,6 @@ class Menu extends Phaser.Scene {
 
     create() {
         this.add.text(20, 20, "Menu Scene");
+        this.scene.start("playScene");
     }
 }

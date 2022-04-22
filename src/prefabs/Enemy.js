@@ -6,6 +6,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     }
 
     update() {
+        if (this.y >= )
         this.y += this.moveSpeed;
     }
 }

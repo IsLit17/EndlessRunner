@@ -17,7 +17,13 @@ class Play extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         // create player sprite
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
-        this.enem = new Enemy(this, game.config.width/2, game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
+        //this.enem = new Enemy(this, game.config.width/2, game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
+        this.spawnEnem = this.time.delayedCall(3000, () => {
+            for (let i = 0; i < 4; i++) {
+                let enem = new Enemy(this, Phaser.Math.Between(0, game.config.width), game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
+                this.physics.add.existing(enem);
+            }
+        }, null, this);
     }
 
     update() {
@@ -26,6 +32,8 @@ class Play extends Phaser.Scene {
 
         // update player positon
         this.player.update();
-        this.enem.update();
+    }
+
+    spawn() { // function to spawn enemies
     }
 }

@@ -4,10 +4,18 @@ let config = {
     type: Phaser.CANVAS,
     width: 640,
     height: 480,
-    scene: [Menu, Play]
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300},
+            debug: false
+        }
+    },
+    scene: [Menu, Control, Play]
 }
 
 let game = new Phaser.Game(config);
+<<<<<<< HEAD
 */
 
 let game;
@@ -142,3 +150,12 @@ class playGame extends Phaser.Scene{
         }
     }
 };
+=======
+
+// set UI sizes
+let borderUISize = game.config.height / 15;
+let borderPadding = borderUISize / 3;
+
+// define keys
+let keyLEFT, keyRIGHT, keyUP, keyDOWN;
+>>>>>>> main

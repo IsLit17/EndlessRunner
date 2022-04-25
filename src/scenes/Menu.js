@@ -1,13 +1,3 @@
-// class Menu extends Phaser.Scene {
-//     constructor() {
-//         super("menuScene");
-//     }
-
-//     create() {
-//         this.add.text(20, 20, "Menu Scene");
-//         this.scene.start("playScene");
-//     }
-// }
 class Menu extends Phaser.Scene {
     constructor() {
         super("menuScene");

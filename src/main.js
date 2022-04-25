@@ -22,3 +22,6 @@ let borderPadding = borderUISize / 3;
 
 // define keys
 let keyLEFT, keyRIGHT, keyUP, keyDOWN;
+
+// number of enemies
+let numEnemies = 5;

@@ -6,7 +6,7 @@ class Play extends Phaser.Scene {
     preload() {
         this.load.image('background', './assets/tempBackground.png');
         this.load.image('player', './assets/player.png');
-        this.load.image('enemy', './assets/enemy.png');
+        this.load.image('enemy1', './assets/enemy.png');
         this.load.image('enemy2', './assets/enemy2.png');
         this.load.image('enemy3', './assets/enemy3.png');
         this.load.image('enemy4', './assets/enemy4.png');
@@ -23,7 +23,7 @@ class Play extends Phaser.Scene {
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
         this.enemies = [numEnemies];
         for (let i = 0; i < numEnemies; i++) {
-            this.enemies[i] = this.physics.add.image(Phaser.Math.Between(0, game.config.width), 0, 'enemy');
+            this.enemies[i] = this.physics.add.image(Phaser.Math.Between(0, game.config.width), 0, 'enemy' + (i + 1));
             this.enemies[i].setVelocityY(100);
             this.enemies[i].body.allowGravity = false;
         }

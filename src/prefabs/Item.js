@@ -21,7 +21,7 @@ class Item extends Phaser.Physics.Arcade.Sprite {
 
         //this.body.onWorldBounds = true;
 
-        this.setVelocity(-200, -200);
+        this.setVelocity(200* Phaser.Math.Between(-1, 1), 200* Phaser.Math.Between(-1, 1));
     }
 
     reset(){

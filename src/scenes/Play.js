@@ -18,12 +18,8 @@ class Play extends Phaser.Scene {
         // create player sprite
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
         //this.enem = new Enemy(this, game.config.width/2, game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
-        this.spawnEnem = this.time.delayedCall(3000, () => {
-            for (let i = 0; i < 4; i++) {
-                let enem = new Enemy(this, Phaser.Math.Between(0, game.config.width), game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
-                this.physics.add.existing(enem);
-            }
-        }, null, this);
+        this.count = 0;
+        this.spawnEnem = this.time.delayedCall(3000, this.spawn(), null, this);
     }
 
     update() {
@@ -35,5 +31,9 @@ class Play extends Phaser.Scene {
     }
 
     spawn() { // function to spawn enemies
+        for (let i = 0; i < 4; i++) {
+            let enem = new Enemy(this, Phaser.Math.Between(0, game.config.width), game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
+            this.physics.add.existing(enem);
+        }
     }
 }

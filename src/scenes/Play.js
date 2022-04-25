@@ -23,10 +23,11 @@ class Play extends Phaser.Scene {
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
         this.enemies = [numEnemies];
         for (let i = 0; i < numEnemies; i++) {
-            this.enemies[i] = this.physics.add.image(Phaser.Math.Between(0, game.config.width), 0, 'enemy' + (i + 1));
+            this.enemies[i] = this.physics.add.image(48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'enemy' + (i + 1));
             this.enemies[i].setVelocityY(100);
             this.enemies[i].body.allowGravity = false;
         }
+        console.log(this.enemies[0].displayWidth); // = 32;
         /*
         this.spawnEnem = this.time.delayedCall(3000, () => {
             for (let i = 0; i < 4; i++) {
@@ -45,7 +46,7 @@ class Play extends Phaser.Scene {
         for (let i = 0; i < numEnemies; i++) {
             if(this.enemies[i].y > game.config.height){
                 this.enemies[i].y = 0;
-                this.enemies[i].x = Phaser.Math.Between(0, game.config.width);
+                this.enemies[i].x = 48*Phaser.Math.Between(1, (game.config.width/48-1));
             }
         }
 

@@ -28,6 +28,9 @@ class Play extends Phaser.Scene {
             this.enemies[i].body.allowGravity = false;
         }
         console.log(this.enemies[0].displayWidth); // = 32;
+
+        this.item = new Item(this, 0, 0, 'enemy1',0);
+        //this.physics.world.on('worldbounds', onWorldBound);
         /*
         this.spawnEnem = this.time.delayedCall(3000, () => {
             for (let i = 0; i < 4; i++) {
@@ -51,6 +54,22 @@ class Play extends Phaser.Scene {
             }
         }
 
+        if(this.checkCollision(this.player, this.item)){
+            this.item.reset();
+        }
+
+    }
+
+    checkCollision(p1, p2) {
+        // simple AABB checking
+        if (p1.x < p2.x + p2.width && 
+            p1.x + p1.width > p2.x && 
+            p1.y < p2.y + p2.height &&
+            p1.height + p1.y > p2.y) {
+                return true;
+        } else {
+            return false;
+        }
     }
 
     spawn() { // function to spawn enemies

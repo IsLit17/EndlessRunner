@@ -20,7 +20,7 @@ class Menu extends Phaser.Scene {
         }
 
     // show menu text
-    this.add.text(game.config.width/2, game.config.height/2 - borderUISize * 2 - borderPadding * 2, '(Name Unknown)', menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/2 - borderUISize * 2 - borderPadding * 2, 'Color Rush', menuConfig).setOrigin(0.5);
     this.add.text(game.config.width/2, game.config.height/2 - borderUISize * 1 - borderPadding * 1, 'Use the ← and → arrows to move', menuConfig).setOrigin(0.5);
     menuConfig.backgroundColor = '#00FF00';
     menuConfig.color = '#000';

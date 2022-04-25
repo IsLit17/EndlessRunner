@@ -14,6 +14,10 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+
+        //health variable and game over flag
+        this.gameOver = false;
+        this.health = 1;
         //add background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
         // set keys
@@ -27,23 +31,24 @@ class Play extends Phaser.Scene {
             this.enemies[i].setVelocityY(100);
             this.enemies[i].body.allowGravity = false;
         }
-        /*
-        this.spawnEnem = this.time.delayedCall(3000, () => {
-            for (let i = 0; i < 4; i++) {
-                this.enem = new Enemy(this, Phaser.Math.Between(0, game.config.width), game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
-                this.physics.add.existing(this.enem);
-            }
-        }, null, this);
-        */
+
+        this.enemyGroup = this.physics.add.staticGroup();
+        this.enemyGroup.addMultiple(this.enemies);
+
+        this.playerGroup = this.physics.add.staticGroup();
+        this.playerGroup.add(this.player);
+
+        this.physics.add.collider(this.playerGroup, this.enemyGroup, this.lowerHealth());
     }
 
     update() {
         // parallax scrolling
+        console.log(this.health);
         this.background.tilePositionY -= 4;
         this.player.update();
 
         for (let i = 0; i < numEnemies; i++) {
-            if(this.enemies[i].y > game.config.height){
+            if(this.enemies[i].y > game.config.height) {
                 this.enemies[i].y = 0;
                 this.enemies[i].x = Phaser.Math.Between(0, game.config.width);
             }
@@ -51,6 +56,11 @@ class Play extends Phaser.Scene {
 
     }
 
-    spawn() { // function to spawn enemies
+    lowerHealth() {
+        this.health -= 1;
+        if (this.health <= 0) {
+            this.gameOver = true;
+        }
     }
+
 }

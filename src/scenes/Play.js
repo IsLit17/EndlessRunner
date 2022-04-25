@@ -37,6 +37,7 @@ class Play extends Phaser.Scene {
     update() {
         // parallax scrolling
         this.background.tilePositionY -= 4;
+        this.player.update();
 
         if(this.enemies.y > game.config.height){
             this.enemies.y = 0;

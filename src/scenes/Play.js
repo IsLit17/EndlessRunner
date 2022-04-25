@@ -6,7 +6,11 @@ class Play extends Phaser.Scene {
     preload() {
         this.load.image('background', './assets/tempBackground.png');
         this.load.image('player', './assets/player.png');
-        this.load.image('enemy', './assets/enemy.png');
+        this.load.image('enemy1', './assets/enemy.png');
+        this.load.image('enemy2', './assets/enemy2.png');
+        this.load.image('enemy3', './assets/enemy3.png');
+        this.load.image('enemy4', './assets/enemy4.png');
+        this.load.image('enemy5', './assets/enemy5.png');
     }
 
     create() {
@@ -17,11 +21,13 @@ class Play extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         // create player sprite
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
-        for (let i = 0; i < 4; i++) {
-            this.enemies = this.physics.add.image(Phaser.Math.Between(0, game.config.width), 0, 'enemy');
-            this.enemies.setVelocityY(100);
-            this.enemies.body.allowGravity = false;
+        this.enemies = [numEnemies];
+        for (let i = 0; i < numEnemies; i++) {
+            this.enemies[i] = this.physics.add.image(48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'enemy' + (i + 1));
+            this.enemies[i].setVelocityY(100);
+            this.enemies[i].body.allowGravity = false;
         }
+        console.log(this.enemies[0].displayWidth); // = 32;
         /*
         this.spawnEnem = this.time.delayedCall(3000, () => {
             for (let i = 0; i < 4; i++) {
@@ -35,13 +41,13 @@ class Play extends Phaser.Scene {
     update() {
         // parallax scrolling
         this.background.tilePositionY -= 4;
+        this.player.update();
 
-        if(this.enemies.y > game.config.height){
-            this.enemies.destroy();
-            for (let i = 0; i < Phaser.Math.Between(0, 4); i++) {
-                this.enemies = this.physics.add.image(Phaser.Math.Between(0, game.config.width), 0, 'enemy');
-                this.enemies.setVelocityY(100);
-                this.enemies.body.allowGravity = false;
+
+        for (let i = 0; i < numEnemies; i++) {
+            if(this.enemies[i].y > game.config.height){
+                this.enemies[i].y = 0;
+                this.enemies[i].x = 48*Phaser.Math.Between(1, (game.config.width/48-1));
             }
         }
 

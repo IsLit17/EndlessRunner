@@ -6,11 +6,11 @@ class Play extends Phaser.Scene {
     preload() {
         this.load.image('background', './assets/tempBackground.png');
         this.load.image('player', './assets/player.png');
-        this.load.image('enemy1', './assets/enemy.png');
-        this.load.image('enemy2', './assets/enemy2.png');
-        this.load.image('enemy3', './assets/enemy3.png');
-        this.load.image('enemy4', './assets/enemy4.png');
-        this.load.image('enemy5', './assets/enemy5.png');
+        this.load.image('item1', './assets/enemy.png');
+        this.load.image('item2', './assets/enemy2.png');
+        this.load.image('item3', './assets/enemy3.png');
+        this.load.image('item4', './assets/enemy4.png');
+        this.load.image('item5', './assets/enemy5.png');
     }
 
     create() {
@@ -27,31 +27,16 @@ class Play extends Phaser.Scene {
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
         this.enemies = [numEnemies];
         for (let i = 0; i < numEnemies; i++) {
-            this.enemies[i] = this.physics.add.image(48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'enemy' + (i + 1));
+            this.enemies[i] = this.physics.add.image(48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'item' + (i + 1));
             this.enemies[i].setVelocityY(100);
             this.enemies[i].body.allowGravity = false;
         }
         console.log(this.enemies[0].displayWidth); // = 32;
-    }
-
-    update() {
-        // parallax scrolling
         this.item = new Item(this, 0, 0,0);
-        //this.physics.world.on('worldbounds', onWorldBound);
-        /*
-        this.spawnEnem = this.time.delayedCall(3000, () => {
-            for (let i = 0; i < 4; i++) {
-                this.enem = new Enemy(this, Phaser.Math.Between(0, game.config.width), game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
-                this.physics.add.existing(this.enem);
-            }
-        }, null, this);
-        */
-       this.existItem = true;
     }
 
     update() {
         // parallax scrolling//
->>>>>>> 292aeefd64618eaa6e1ebff0028c46ffb9a5541c
         this.background.tilePositionY -= 4;
         this.player.update();
 
@@ -65,20 +50,20 @@ class Play extends Phaser.Scene {
 
         if(this.checkCollision(this.player, this.item)){
             switch(this.item.texture.key){
-                case 'enemy1':
+                case 'item1':
                     console.log(this.item.texture.key);
                     this.player.speedUp();
                     break;
-                case 'enemy2':
+                case 'item2':
                     console.log(this.item.texture.key);
                     break;
-                case 'enemy3':
+                case 'item3':
                     console.log(this.item.texture.key);
                     break;
-                case 'enemy4':
+                case 'item4':
                     console.log(this.item.texture.key);
                     break;
-                case 'enemy5':
+                case 'item5':
                     console.log(this.item.texture.key);
                     break;
                 default:
@@ -88,9 +73,6 @@ class Play extends Phaser.Scene {
         
             this.item.destroy();
             this.item = new Item(this, Phaser.Math.Between(0, game.config.width), 0, 0);
-            //this.existItem = false;
-
-            
         }
 
     }

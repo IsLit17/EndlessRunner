@@ -32,20 +32,29 @@ class Play extends Phaser.Scene {
             this.enemies[i].body.allowGravity = false;
         }
         console.log(this.enemies[0].displayWidth); // = 32;
-
-        // create physics groups
-        this.enemyGroup = this.physics.add.staticGroup();
-        this.enemyGroup.addMultiple(this.enemies);
-        //this.player = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'player');
-
-        this.physics.add.collider(this.player, this.enemies[0]);
     }
 
     update() {
         // parallax scrolling
-        console.log(this.health + ", " + this.gameOver);
+        this.item = new Item(this, 0, 0,0);
+        //this.physics.world.on('worldbounds', onWorldBound);
+        /*
+        this.spawnEnem = this.time.delayedCall(3000, () => {
+            for (let i = 0; i < 4; i++) {
+                this.enem = new Enemy(this, Phaser.Math.Between(0, game.config.width), game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
+                this.physics.add.existing(this.enem);
+            }
+        }, null, this);
+        */
+       this.existItem = true;
+    }
+
+    update() {
+        // parallax scrolling//
+>>>>>>> 292aeefd64618eaa6e1ebff0028c46ffb9a5541c
         this.background.tilePositionY -= 4;
         this.player.update();
+
 
         for (let i = 0; i < numEnemies; i++) {
             if(this.enemies[i].y > game.config.height) {
@@ -54,6 +63,48 @@ class Play extends Phaser.Scene {
             }
         }
 
+        if(this.checkCollision(this.player, this.item)){
+            switch(this.item.texture.key){
+                case 'enemy1':
+                    console.log(this.item.texture.key);
+                    this.player.speedUp();
+                    break;
+                case 'enemy2':
+                    console.log(this.item.texture.key);
+                    break;
+                case 'enemy3':
+                    console.log(this.item.texture.key);
+                    break;
+                case 'enemy4':
+                    console.log(this.item.texture.key);
+                    break;
+                case 'enemy5':
+                    console.log(this.item.texture.key);
+                    break;
+                default:
+                    console.log("default");
+            
+            }
+        
+            this.item.destroy();
+            this.item = new Item(this, Phaser.Math.Between(0, game.config.width), 0, 0);
+            //this.existItem = false;
+
+            
+        }
+
+    }
+
+    checkCollision(p1, p2) {
+        // simple AABB checking
+        if (p1.x < p2.x + p2.width && 
+            p1.x + p1.width > p2.x && 
+            p1.y < p2.y + p2.height &&
+            p1.height + p1.y > p2.y) {
+                return true;
+        } else {
+            return false;
+        }
     }
 
     lowerHealth() {

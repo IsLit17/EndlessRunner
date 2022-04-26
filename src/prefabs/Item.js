@@ -18,9 +18,6 @@ class Item extends Phaser.Physics.Arcade.Sprite {
         this.setBounce(1, 1);
         this.body.allowGravity = false;
         this.setCollideWorldBounds(true);
-
-        //this.body.onWorldBounds = true;
-
         //this.setVelocity(200* Phaser.Math.Between(-1, 1), 200* Phaser.Math.Between(-1, 1));
         this.setVelocity(200*Phaser.Math.FloatBetween(-1, 1), 200);
     }

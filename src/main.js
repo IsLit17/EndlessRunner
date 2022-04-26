@@ -31,13 +31,14 @@ let maxHealth = 3;
 
 // score config
 let scoreConfig = {
-    fontFamily: 'Courier',
+    fontFamily: 'creepster',
     fontSize: '28px',
-    color: '#843605',
-    align: 'left',
+    backgroundColor: '#b71c1c',
+    color: '#ffffff',
+    align: 'center',
     padding: {
     top: 5,
     bottom: 5,
     },
-    fixedWidth: 600
+    fixedWidth: 250
 }

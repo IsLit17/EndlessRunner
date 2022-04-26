@@ -32,21 +32,7 @@ class Play extends Phaser.Scene {
             this.enemies[i].body.allowGravity = false;
         }
         console.log(this.enemies[0].displayWidth); // = 32;
-<<<<<<< HEAD
-
         this.item = new Item(this, game.config.width/2, 0,0);
-        //this.physics.world.on('worldbounds', onWorldBound);
-        /*
-        this.spawnEnem = this.time.delayedCall(3000, () => {
-            for (let i = 0; i < 4; i++) {
-                this.enem = new Enemy(this, Phaser.Math.Between(0, game.config.width), game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
-                this.physics.add.existing(this.enem);
-            }
-        }, null, this);
-        */
-=======
-        this.item = new Item(this, 0, 0,0);
->>>>>>> 0bf4c15f9b62d9cd9826ce47d762c2f8f9fd264d
     }
 
     update() {

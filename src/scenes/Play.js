@@ -56,6 +56,27 @@ class Play extends Phaser.Scene {
         }
 
         if(this.checkCollision(this.player, this.item)){
+            switch(this.item.texture.key){
+                case 'enemy1':
+                    console.log(this.item.texture.key);
+                    break;
+                case 'enemy2':
+                    console.log(this.item.texture.key);
+                    break;
+                case 'enemy3':
+                    console.log(this.item.texture.key);
+                    break;
+                case 'enemy4':
+                    console.log(this.item.texture.key);
+                    break;
+                case 'enemy5':
+                    console.log(this.item.texture.key);
+                    break;
+                default:
+                    console.log("default");
+            
+            }
+        
             this.item.destroy();
             this.item = new Item(this, Phaser.Math.Between(0, game.config.width), 0, 0);
             //this.existItem = false;

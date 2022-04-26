@@ -15,4 +15,8 @@ class Player extends Phaser.GameObjects.Sprite {
             this.x += this.moveSpeed;
         }
     }
+
+    speedUp(){
+        this.moveSpeed *= 1.5;
+    }
 }

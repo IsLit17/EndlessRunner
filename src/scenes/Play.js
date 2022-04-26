@@ -59,6 +59,7 @@ class Play extends Phaser.Scene {
             switch(this.item.texture.key){
                 case 'enemy1':
                     console.log(this.item.texture.key);
+                    this.player.speedUp();
                     break;
                 case 'enemy2':
                     console.log(this.item.texture.key);

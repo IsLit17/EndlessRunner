@@ -4,8 +4,9 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', './assets/tempBackground.png');
+        this.load.image('background', './assets/background.png');
         this.load.image('player', './assets/player.png');
+        this.load.image('enemy', './assets/obs.png');
         this.load.image('item1', './assets/enemy.png');
         this.load.image('item2', './assets/enemy2.png');
         this.load.image('item3', './assets/enemy3.png');
@@ -27,11 +28,12 @@ class Play extends Phaser.Scene {
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
         this.enemies = [numEnemies];
         for (let i = 0; i < numEnemies; i++) {
-            this.enemies[i] = this.physics.add.image(48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'item' + (i + 1));
+            //this.enemies[i] = this.physics.add.image(48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'item' + (i + 1));
+            this.enemies[i] = new Enemy(this, 48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'enemy', 0).setOrigin(0.5, 0);
             this.enemies[i].setVelocityY(100);
-            this.enemies[i].body.allowGravity = false;
+            //this.enemies[i].body.allowGravity = false;
         }
-        console.log(this.enemies[0].displayWidth); // = 32;
+        //console.log(this.enemies[0].displayWidth); // = 32;
         this.item = new Item(this, game.config.width/2, 0,0);
     }
 

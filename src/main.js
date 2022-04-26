@@ -21,7 +21,23 @@ let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
 
 // define keys
-let keyLEFT, keyRIGHT, keyUP, keyDOWN;
+let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyR;
 
 // number of enemies
 let numEnemies = 5;
+
+// maximum health
+let maxHealth = 3;
+
+// score config
+let scoreConfig = {
+    fontFamily: 'Courier',
+    fontSize: '28px',
+    color: '#843605',
+    align: 'left',
+    padding: {
+    top: 5,
+    bottom: 5,
+    },
+    fixedWidth: 600
+}

@@ -15,7 +15,6 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-
         //health variable and game over flag
         this.gameOver = false;
         this.health = 1;
@@ -24,66 +23,77 @@ class Play extends Phaser.Scene {
         // set keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         // create player sprite
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
+
+        // create enemies
         this.enemies = [numEnemies];
         for (let i = 0; i < numEnemies; i++) {
-            //this.enemies[i] = this.physics.add.image(48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'item' + (i + 1));
             this.enemies[i] = new Enemy(this, 48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'enemy', 0).setOrigin(0.5, 0);
             this.enemies[i].setVelocityY(100);
-            //this.enemies[i].body.allowGravity = false;
         }
-        //console.log(this.enemies[0].displayWidth); // = 32;
         this.item = new Item(this, game.config.width/2, 0,0);
     }
 
     update() {
+        // when game is over
+        if (this.gameOver) {
+            this.add.text(game.config.width/2, game.config.height/2 - 8, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                this.scene.restart();
+            }
+            if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+                this.scene.start("menuScene");
+            }
+        }
         // parallax scrolling
         this.background.tilePositionY -= 4;
 
-        // update player position
-        this.player.update();
+        if (!this.gameOver) {
+            // update player position
+            this.player.update();
+            // collision for enemies
+            for (let i = 0; i < numEnemies; i++) {
+                if (this.checkCollision(this.player, this.enemies[i])) {
+                    this.enemies[i].reset();
+                    this.lowerHealth();
+                }
+                if(this.enemies[i].y > game.config.height) {
+                    this.enemies[i].reset();
+                }
+            }
 
-        console.log(this.health);
-        for (let i = 0; i < numEnemies; i++) {
-            if (this.checkCollision(this.player, this.enemies[i])) {
-                this.enemies[i].reset();
-                this.lowerHealth();
+            // collision for items
+            if(this.checkCollision(this.player, this.item)){
+                switch(this.item.texture.key){
+                    case 'item1':
+                        console.log(this.item.texture.key);
+                        this.player.speedUp();
+                        this.time.delayedCall(10000, () => {
+                            this.player.moveSpeed = 4;
+                        },null,this);
+                        break;
+                    case 'item2':
+                        console.log(this.item.texture.key);
+                        break;
+                    case 'item3':
+                        console.log(this.item.texture.key);
+                        break;
+                    case 'item4':
+                        console.log(this.item.texture.key);
+                        break;
+                    case 'item5':
+                        console.log(this.item.texture.key);
+                        break;
+                    default:
+                        console.log("default");
+                
+                }
+                this.item.destroy();
+                this.item = new Item(this, Phaser.Math.Between(0, game.config.width), 0, 0);
             }
-            if(this.enemies[i].y > game.config.height) {
-                this.enemies[i].y = 0;
-                this.enemies[i].x = 48*Phaser.Math.Between(1, (game.config.width/48-1));
-            }
-        }
-
-        if(this.checkCollision(this.player, this.item)){
-            switch(this.item.texture.key){
-                case 'item1':
-                    console.log(this.item.texture.key);
-                    this.player.speedUp();
-                    this.time.delayedCall(10000, () => {
-                        this.player.moveSpeed = 4;
-                    },null,this);
-                    break;
-                case 'item2':
-                    console.log(this.item.texture.key);
-                    break;
-                case 'item3':
-                    console.log(this.item.texture.key);
-                    break;
-                case 'item4':
-                    console.log(this.item.texture.key);
-                    break;
-                case 'item5':
-                    console.log(this.item.texture.key);
-                    break;
-                default:
-                    console.log("default");
-            
-            }
-        
-            this.item.destroy();
-            this.item = new Item(this, Phaser.Math.Between(0, game.config.width), 0, 0);
         }
 
     }

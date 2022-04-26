@@ -36,12 +36,18 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        // parallax scrolling//
+        // parallax scrolling
         this.background.tilePositionY -= 4;
+
+        // update player position
         this.player.update();
 
-
+        console.log(this.health);
         for (let i = 0; i < numEnemies; i++) {
+            if (this.checkCollision(this.player, this.enemies[i])) {
+                this.enemies[i].reset();
+                this.lowerHealth();
+            }
             if(this.enemies[i].y > game.config.height) {
                 this.enemies[i].reset();
             }

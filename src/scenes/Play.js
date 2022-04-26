@@ -15,11 +15,27 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        //add background
+        this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
+
         //health variable and game over flag
         this.gameOver = false;
         this.health = 1;
-        //add background
-        this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
+
+        // display health
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            color: '#b71c1c',
+            align: 'center',
+            padding: {
+            top: 5,
+            bottom: 5,
+            },
+            fixedWidth: 150
+        }
+        this.lives = this.add.text(game.config.width/2, borderUISize + borderPadding*2, 'Lives: ' + this.health, scoreConfig);
+
         // set keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -39,9 +55,9 @@ class Play extends Phaser.Scene {
     update() {
         // when game is over
         if (this.gameOver) {
-            this.add.text(game.config.width/2, game.config.height/2 - 8, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 136, 'or <- for Menu', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 - 8, 'GAME OVER', gameConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', gameConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 136, 'or <- for Menu', gameConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.scene.restart();
             }
@@ -114,8 +130,10 @@ class Play extends Phaser.Scene {
     lowerHealth() {
         this.health -= 1;
         if (this.health <= 0) {
+            this.health = 0
             this.gameOver = true;
         }
+        this.lives.setText('Lives: ' + this.health);
     }
 
 }

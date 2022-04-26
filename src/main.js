@@ -24,14 +24,14 @@ let borderPadding = borderUISize / 3;
 let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyR;
 
 // number of enemies
-let numEnemies = 5;
+let numEnemies = 6;
 
 // maximum health
 let maxHealth = 3;
 
 // score config
-let scoreConfig = {
-    fontFamily: 'creepster',
+let gameConfig = {
+    fontFamily: 'Courier',
     fontSize: '28px',
     backgroundColor: '#b71c1c',
     color: '#ffffff',
@@ -40,5 +40,5 @@ let scoreConfig = {
     top: 5,
     bottom: 5,
     },
-    fixedWidth: 250
+    fixedWidth: 350
 }

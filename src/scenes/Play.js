@@ -32,19 +32,18 @@ class Play extends Phaser.Scene {
             this.enemies[i].body.allowGravity = false;
         }
         console.log(this.enemies[0].displayWidth); // = 32;
-        /*
-        this.spawnEnem = this.time.delayedCall(3000, () => {
-            for (let i = 0; i < 4; i++) {
-                this.enem = new Enemy(this, Phaser.Math.Between(0, game.config.width), game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
-                this.physics.add.existing(this.enem);
-            }
-        }, null, this);
-        */
+
+        // create physics groups
+        this.enemyGroup = this.physics.add.staticGroup();
+        this.enemyGroup.addMultiple(this.enemies);
+        //this.player = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'player');
+
+        this.physics.add.collider(this.player, this.enemies[0]);
     }
 
     update() {
         // parallax scrolling
-        console.log(this.health);
+        console.log(this.health + ", " + this.gameOver);
         this.background.tilePositionY -= 4;
         this.player.update();
 

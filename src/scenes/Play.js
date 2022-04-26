@@ -29,7 +29,7 @@ class Play extends Phaser.Scene {
         }
         console.log(this.enemies[0].displayWidth); // = 32;
 
-        this.item = new Item(this, 0, 0,0);
+        this.item = new Item(this, game.config.width/2, 0,0);
         //this.physics.world.on('worldbounds', onWorldBound);
         /*
         this.spawnEnem = this.time.delayedCall(3000, () => {
@@ -39,7 +39,6 @@ class Play extends Phaser.Scene {
             }
         }, null, this);
         */
-       this.existItem = true;
     }
 
     update() {
@@ -60,6 +59,9 @@ class Play extends Phaser.Scene {
                 case 'enemy1':
                     console.log(this.item.texture.key);
                     this.player.speedUp();
+                    this.time.delayedCall(10000, () => {
+                        this.player.moveSpeed = 4;
+                    },null,this);
                     break;
                 case 'enemy2':
                     console.log(this.item.texture.key);

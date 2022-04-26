@@ -31,7 +31,7 @@ class Play extends Phaser.Scene {
             this.enemies[i] = new Enemy(this, 48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'enemy', 0).setOrigin(0.5,0);
             this.enemies[i].setVelocityY(100);
         }
-        //console.log(this.enemies[0].displayWidth); // = 32;
+        console.log(this.enemies[0].displayWidth); // = 32;
         this.item = new Item(this, 0, 0,0);
     }
 
@@ -52,6 +52,9 @@ class Play extends Phaser.Scene {
                 case 'item1':
                     console.log(this.item.texture.key);
                     this.player.speedUp();
+                    this.time.delayedCall(10000, () => {
+                        this.player.moveSpeed = 4;
+                    },null,this);
                     break;
                 case 'item2':
                     console.log(this.item.texture.key);

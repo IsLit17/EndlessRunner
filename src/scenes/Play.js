@@ -20,7 +20,7 @@ class Play extends Phaser.Scene {
 
         //health variable and game over flag
         this.gameOver = false;
-        this.health = 1;
+        this.health = 3;
 
         // display health
         let scoreConfig = {
@@ -41,15 +41,15 @@ class Play extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         // create player sprite
-        this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
+        this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0,0);
 
         // create enemies
         this.enemies = [numEnemies];
         for (let i = 0; i < numEnemies; i++) {
-            this.enemies[i] = new Enemy(this, 48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'enemy', 0).setOrigin(0.5, 0);
+            this.enemies[i] = new Enemy(this, 96*Phaser.Math.Between(1, game.config.width/96-1), 0, 'enemy', 0).setOrigin(0, 0);
             this.enemies[i].setVelocityY(100);
         }
-        this.item = new Item(this, game.config.width/2, 0,0);
+        this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
     }
 
     update() {
@@ -75,7 +75,7 @@ class Play extends Phaser.Scene {
             for (let i = 0; i < numEnemies; i++) {
                 if (this.checkCollision(this.player, this.enemies[i])) {
                     this.enemies[i].reset();
-                    this.lowerHealth();
+                    //this.lowerHealth();
                 }
                 if(this.enemies[i].y > game.config.height) {
                     this.enemies[i].reset();
@@ -88,9 +88,7 @@ class Play extends Phaser.Scene {
                     case 'item1':
                         console.log(this.item.texture.key);
                         this.player.speedUp();
-                        this.time.delayedCall(10000, () => {
-                            this.player.moveSpeed = 4;
-                        },null,this);
+
                         break;
                     case 'item2':
                         console.log(this.item.texture.key);

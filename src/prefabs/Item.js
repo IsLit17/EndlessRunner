@@ -1,8 +1,8 @@
 class Item extends Phaser.Physics.Arcade.Sprite {
 
-    constructor (scene, x, y, texture, frame)
+    constructor (scene, x, y, frame)
     {
-        super(scene, x, y, texture, frame);
+        super(scene, x, y, 'enemy'+ Phaser.Math.Between(1, 5), frame);
 
         //  You can either do this:
         scene.add.existing(this);
@@ -21,12 +21,27 @@ class Item extends Phaser.Physics.Arcade.Sprite {
 
         //this.body.onWorldBounds = true;
 
-        this.setVelocity(200* Phaser.Math.Between(-1, 1), 200* Phaser.Math.Between(-1, 1));
+        //this.setVelocity(200* Phaser.Math.Between(-1, 1), 200* Phaser.Math.Between(-1, 1));
+        this.setVelocity(200*Phaser.Math.FloatBetween(-1, 1), 200);
     }
 
     reset(){
-        this.x = Phaser.Math.Between(0, game.config.width);
-        this.y = Phaser.Math.Between(0, game.config.width);
+        //this.setVisable = false;
+            //this.setVisable = true;
+            let randomX = Phaser.Math.Between(0, game.config.width);
+            let randomY = Phaser.Math.Between(0, game.config.width);
+            if(randomX != 0){
+                this.x = randomX;
+                this.y = 0;
+            }
+            else if(randomY != 0){
+                this.x = 0;
+                this.y = randomY;
+            }
+            else{
+                this.x = randomX;
+                this.y = randomY;
+            }
     }
 
 }

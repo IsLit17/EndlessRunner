@@ -29,7 +29,7 @@ class Play extends Phaser.Scene {
         }
         console.log(this.enemies[0].displayWidth); // = 32;
 
-        this.item = new Item(this, 0, 0, 'enemy1',0);
+        this.item = new Item(this, 0, 0,0);
         //this.physics.world.on('worldbounds', onWorldBound);
         /*
         this.spawnEnem = this.time.delayedCall(3000, () => {
@@ -39,6 +39,7 @@ class Play extends Phaser.Scene {
             }
         }, null, this);
         */
+       this.existItem = true;
     }
 
     update() {
@@ -55,7 +56,33 @@ class Play extends Phaser.Scene {
         }
 
         if(this.checkCollision(this.player, this.item)){
-            this.item.reset();
+            switch(this.item.texture.key){
+                case 'enemy1':
+                    console.log(this.item.texture.key);
+                    this.player.speedUp();
+                    break;
+                case 'enemy2':
+                    console.log(this.item.texture.key);
+                    break;
+                case 'enemy3':
+                    console.log(this.item.texture.key);
+                    break;
+                case 'enemy4':
+                    console.log(this.item.texture.key);
+                    break;
+                case 'enemy5':
+                    console.log(this.item.texture.key);
+                    break;
+                default:
+                    console.log("default");
+            
+            }
+        
+            this.item.destroy();
+            this.item = new Item(this, Phaser.Math.Between(0, game.config.width), 0, 0);
+            //this.existItem = false;
+
+            
         }
 
     }

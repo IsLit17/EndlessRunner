@@ -20,11 +20,16 @@ class Control extends Phaser.Scene {
         }
 
     // show menu text
-    this.add.text(game.config.width/2, game.config.height/2 - borderUISize * 2 - borderPadding * 2, 'The ← arrow moves the character left', menuConfig).setOrigin(0.5);
-    this.add.text(game.config.width/2, game.config.height/2 - borderUISize * 1 - borderPadding * 1, 'The → arrow moves the character right', menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/2 - borderUISize * 5 - borderPadding * 5, "Objective:", menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/2 - borderUISize * 4 - borderPadding * 4, "Survive as long as possible while collecting items", menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/2 - borderUISize * 3 - borderPadding * 3, 'The ← arrow moves the character left', menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/2 - borderUISize * 2 - borderPadding * 2, 'The → arrow moves the character right', menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, "[This item] gives invincibility:", menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, "[This item] speeds the player up:", menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/2 + borderUISize * 2 + borderPadding * 2, "[This item] slows the enemies down", menuConfig).setOrigin(0.5);
     menuConfig.backgroundColor = '#00FF00';
     menuConfig.color = '#000';
-    this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press ← arrow to go back to the menu', menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/2 + borderUISize * 3 + borderPadding * 3, 'Press ← arrow to go back to the menu', menuConfig).setOrigin(0.5);
 
     // define keys
     keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);

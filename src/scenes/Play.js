@@ -6,14 +6,18 @@ class Play extends Phaser.Scene {
     preload() {
         this.load.image('background', './assets/tempBackground.png');
         this.load.image('player', './assets/player.png');
-        this.load.image('enemy1', './assets/enemy.png');
-        this.load.image('enemy2', './assets/enemy2.png');
-        this.load.image('enemy3', './assets/enemy3.png');
-        this.load.image('enemy4', './assets/enemy4.png');
-        this.load.image('enemy5', './assets/enemy5.png');
+        this.load.image('item1', './assets/enemy.png');
+        this.load.image('item2', './assets/enemy2.png');
+        this.load.image('item3', './assets/enemy3.png');
+        this.load.image('item4', './assets/enemy4.png');
+        this.load.image('item5', './assets/enemy5.png');
     }
 
     create() {
+
+        //health variable and game over flag
+        this.gameOver = false;
+        this.health = 1;
         //add background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
         // set keys
@@ -23,11 +27,12 @@ class Play extends Phaser.Scene {
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
         this.enemies = [numEnemies];
         for (let i = 0; i < numEnemies; i++) {
-            this.enemies[i] = this.physics.add.image(48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'enemy' + (i + 1));
+            this.enemies[i] = this.physics.add.image(48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'item' + (i + 1));
             this.enemies[i].setVelocityY(100);
             this.enemies[i].body.allowGravity = false;
         }
         console.log(this.enemies[0].displayWidth); // = 32;
+<<<<<<< HEAD
 
         this.item = new Item(this, game.config.width/2, 0,0);
         //this.physics.world.on('worldbounds', onWorldBound);
@@ -39,6 +44,9 @@ class Play extends Phaser.Scene {
             }
         }, null, this);
         */
+=======
+        this.item = new Item(this, 0, 0,0);
+>>>>>>> 0bf4c15f9b62d9cd9826ce47d762c2f8f9fd264d
     }
 
     update() {
@@ -48,7 +56,7 @@ class Play extends Phaser.Scene {
 
 
         for (let i = 0; i < numEnemies; i++) {
-            if(this.enemies[i].y > game.config.height){
+            if(this.enemies[i].y > game.config.height) {
                 this.enemies[i].y = 0;
                 this.enemies[i].x = 48*Phaser.Math.Between(1, (game.config.width/48-1));
             }
@@ -56,23 +64,23 @@ class Play extends Phaser.Scene {
 
         if(this.checkCollision(this.player, this.item)){
             switch(this.item.texture.key){
-                case 'enemy1':
+                case 'item1':
                     console.log(this.item.texture.key);
                     this.player.speedUp();
                     this.time.delayedCall(10000, () => {
                         this.player.moveSpeed = 4;
                     },null,this);
                     break;
-                case 'enemy2':
+                case 'item2':
                     console.log(this.item.texture.key);
                     break;
-                case 'enemy3':
+                case 'item3':
                     console.log(this.item.texture.key);
                     break;
-                case 'enemy4':
+                case 'item4':
                     console.log(this.item.texture.key);
                     break;
-                case 'enemy5':
+                case 'item5':
                     console.log(this.item.texture.key);
                     break;
                 default:
@@ -82,9 +90,6 @@ class Play extends Phaser.Scene {
         
             this.item.destroy();
             this.item = new Item(this, Phaser.Math.Between(0, game.config.width), 0, 0);
-            //this.existItem = false;
-
-            
         }
 
     }
@@ -101,6 +106,11 @@ class Play extends Phaser.Scene {
         }
     }
 
-    spawn() { // function to spawn enemies
+    lowerHealth() {
+        this.health -= 1;
+        if (this.health <= 0) {
+            this.gameOver = true;
+        }
     }
+
 }

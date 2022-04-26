@@ -42,7 +42,7 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        // parallax scrolling
+        // parallax scrolling//
         this.background.tilePositionY -= 4;
         this.player.update();
 

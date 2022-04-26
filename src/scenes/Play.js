@@ -4,85 +4,113 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', './assets/tempBackground.png');
+        this.load.image('background', './assets/background.png');
         this.load.image('player', './assets/player.png');
-        this.load.image('enemy1', './assets/enemy.png');
-        this.load.image('enemy2', './assets/enemy2.png');
-        this.load.image('enemy3', './assets/enemy3.png');
-        this.load.image('enemy4', './assets/enemy4.png');
-        this.load.image('enemy5', './assets/enemy5.png');
+        this.load.image('enemy', './assets/obs.png');
+        this.load.image('item1', './assets/enemy.png');
+        this.load.image('item2', './assets/enemy2.png');
+        this.load.image('item3', './assets/enemy3.png');
+        this.load.image('item4', './assets/enemy4.png');
+        this.load.image('item5', './assets/enemy5.png');
     }
 
     create() {
         //add background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
+
+        //health variable and game over flag
+        this.gameOver = false;
+        this.health = 1;
+
+        // display health
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            color: '#b71c1c',
+            align: 'center',
+            padding: {
+            top: 5,
+            bottom: 5,
+            },
+            fixedWidth: 150
+        }
+        this.lives = this.add.text(game.config.width/2, borderUISize + borderPadding*2, 'Lives: ' + this.health, scoreConfig);
+
         // set keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         // create player sprite
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0.5,0);
+
+        // create enemies
         this.enemies = [numEnemies];
         for (let i = 0; i < numEnemies; i++) {
-            this.enemies[i] = this.physics.add.image(48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'enemy' + (i + 1));
+            this.enemies[i] = new Enemy(this, 48*Phaser.Math.Between(1, game.config.width/48-1), 0, 'enemy', 0).setOrigin(0.5, 0);
             this.enemies[i].setVelocityY(100);
-            this.enemies[i].body.allowGravity = false;
         }
-        console.log(this.enemies[0].displayWidth); // = 32;
-
-        this.item = new Item(this, 0, 0,0);
-        //this.physics.world.on('worldbounds', onWorldBound);
-        /*
-        this.spawnEnem = this.time.delayedCall(3000, () => {
-            for (let i = 0; i < 4; i++) {
-                this.enem = new Enemy(this, Phaser.Math.Between(0, game.config.width), game.config.height/15, 'enemy', 0).setOrigin(0.5, 0);
-                this.physics.add.existing(this.enem);
-            }
-        }, null, this);
-        */
-       this.existItem = true;
+        this.item = new Item(this, game.config.width/2, 0,0);
     }
 
     update() {
-        // parallax scrolling
-        this.background.tilePositionY -= 4;
-        this.player.update();
-
-
-        for (let i = 0; i < numEnemies; i++) {
-            if(this.enemies[i].y > game.config.height){
-                this.enemies[i].y = 0;
-                this.enemies[i].x = 48*Phaser.Math.Between(1, (game.config.width/48-1));
+        // when game is over
+        if (this.gameOver) {
+            this.add.text(game.config.width/2, game.config.height/2 - 8, 'GAME OVER', gameConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', gameConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 136, 'or <- for Menu', gameConfig).setOrigin(0.5);
+            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                this.scene.restart();
+            }
+            if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+                this.scene.start("menuScene");
             }
         }
+        // parallax scrolling
+        this.background.tilePositionY -= 4;
 
-        if(this.checkCollision(this.player, this.item)){
-            switch(this.item.texture.key){
-                case 'enemy1':
-                    console.log(this.item.texture.key);
-                    this.player.speedUp();
-                    break;
-                case 'enemy2':
-                    console.log(this.item.texture.key);
-                    break;
-                case 'enemy3':
-                    console.log(this.item.texture.key);
-                    break;
-                case 'enemy4':
-                    console.log(this.item.texture.key);
-                    break;
-                case 'enemy5':
-                    console.log(this.item.texture.key);
-                    break;
-                default:
-                    console.log("default");
-            
+        if (!this.gameOver) {
+            // update player position
+            this.player.update();
+            // collision for enemies
+            for (let i = 0; i < numEnemies; i++) {
+                if (this.checkCollision(this.player, this.enemies[i])) {
+                    this.enemies[i].reset();
+                    this.lowerHealth();
+                }
+                if(this.enemies[i].y > game.config.height) {
+                    this.enemies[i].reset();
+                }
             }
-        
-            this.item.destroy();
-            this.item = new Item(this, Phaser.Math.Between(0, game.config.width), 0, 0);
-            //this.existItem = false;
 
-            
+            // collision for items
+            if(this.checkCollision(this.player, this.item)){
+                switch(this.item.texture.key){
+                    case 'item1':
+                        console.log(this.item.texture.key);
+                        this.player.speedUp();
+                        this.time.delayedCall(10000, () => {
+                            this.player.moveSpeed = 4;
+                        },null,this);
+                        break;
+                    case 'item2':
+                        console.log(this.item.texture.key);
+                        break;
+                    case 'item3':
+                        console.log(this.item.texture.key);
+                        break;
+                    case 'item4':
+                        console.log(this.item.texture.key);
+                        break;
+                    case 'item5':
+                        console.log(this.item.texture.key);
+                        break;
+                    default:
+                        console.log("default");
+                
+                }
+                this.item.destroy();
+                this.item = new Item(this, Phaser.Math.Between(0, game.config.width), 0, 0);
+            }
         }
 
     }
@@ -99,6 +127,13 @@ class Play extends Phaser.Scene {
         }
     }
 
-    spawn() { // function to spawn enemies
+    lowerHealth() {
+        this.health -= 1;
+        if (this.health <= 0) {
+            this.health = 0
+            this.gameOver = true;
+        }
+        this.lives.setText('Lives: ' + this.health);
     }
+
 }

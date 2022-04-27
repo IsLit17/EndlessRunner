@@ -20,7 +20,7 @@ class Play extends Phaser.Scene {
 
         //health variable and game over flag
         this.gameOver = false;
-        this.health = 3;
+        this.health = maxHealth;
 
         // display health
         let scoreConfig = {
@@ -50,6 +50,11 @@ class Play extends Phaser.Scene {
             this.enemies[i].setVelocityY(100);
         }
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
+
+        // timer/score text
+        timerEvent = this.time.addEvent({ delay: 500, callbackScope: this, loop: true });
+        timerText = this.add.text(game.config.width/2, game.config.height/2, '', { fontSize: '20px', fill: '#ffffff' });
+        //timerText.fixedToCamera = true;
     }
 
     update() {
@@ -71,11 +76,15 @@ class Play extends Phaser.Scene {
         if (!this.gameOver) {
             // update player position
             this.player.update();
+
+            // update time
+            this.updateTime();
+
             // collision for enemies
             for (let i = 0; i < numEnemies; i++) {
                 if (this.checkCollision(this.player, this.enemies[i])) {
                     this.enemies[i].reset();
-                    //this.lowerHealth();
+                    this.lowerHealth();
                 }
                 if(this.enemies[i].y > game.config.height) {
                     this.enemies[i].reset();
@@ -132,6 +141,11 @@ class Play extends Phaser.Scene {
             this.gameOver = true;
         }
         this.lives.setText('Lives: ' + this.health);
+    }
+
+    updateTime() {
+        let timeCur = Math.floor(timerEvent.getProgress());
+        timerText.setText('Score: ' + timeCur);
     }
 
 }

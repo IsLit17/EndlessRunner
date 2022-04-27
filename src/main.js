@@ -42,3 +42,5 @@ let gameConfig = {
     },
     fixedWidth: 350
 }
+
+let timerText, timerEvent;

@@ -87,7 +87,7 @@ class Play extends Phaser.Scene {
                 if (this.checkCollision(this.player, this.enemies[i])) {
                     this.enemies[i].reset();
                     colliderReset.push(this.enemies[i].setVelocityY(0));
-                    //this.lowerHealth();
+                    this.lowerHealth();
                 }
                 if(this.enemies[i].y > game.config.height) {
                     this.enemies[i].reset();

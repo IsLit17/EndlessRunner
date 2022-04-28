@@ -24,7 +24,7 @@ class Play extends Phaser.Scene {
         //health variable and game over flag
         this.gameOver = false;
         this.health = maxHealth;
-        this.healthBar = this.add.image(game.config.width/2 + borderPadding*15, borderUISize + borderPadding - 8, 'health' + maxHealth).setOrigin(0,0);
+        this.healthBar = this.add.image(game.config.width/2 + borderPadding*15, borderUISize + borderPadding - 8, 'health3').setOrigin(0,0);
 
         // display health
         let scoreConfig = {
@@ -142,7 +142,6 @@ class Play extends Phaser.Scene {
             this.gameOver = true;
         }
         this.healthBar.setTexture('health' + this.health);
-
     }
 
     increaseHealth() {
@@ -151,7 +150,6 @@ class Play extends Phaser.Scene {
             this.health = maxHealth;
         }
         this.healthBar.setTexture('health' + this.health);
-
     }
 
     updateTime() {
@@ -160,5 +158,4 @@ class Play extends Phaser.Scene {
             timerText.setText('Score: ' + this.curTime);
         }
     }
-
 }

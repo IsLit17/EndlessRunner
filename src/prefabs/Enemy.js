@@ -9,9 +9,16 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         //this.setCollideWorldBounds(true);
 
     }
+
     // position reset (NOT WORKING AT THE MOMENT)
     reset() {
         this.y = -50;
-        this.x = 96*Phaser.Math.Between(1, (game.config.width/96-1));
+        this.x = Phaser.Utils.Array.RemoveRandomElement(distanceGroup);
+        counter++;
+        if(counter == numEnemies){
+            counter = 0;
+            distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr);
+            //console.log(distanceGroup);
+        }
     }
 }

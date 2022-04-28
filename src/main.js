@@ -25,9 +25,9 @@ let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyR;
 
 // number of enemies
 let numEnemies = 6;
-
+let counter = 0;
 // maximum health
-let maxHealth = 3;
+let maxHealth = 10;
 
 // score config
 let gameConfig = {
@@ -42,3 +42,14 @@ let gameConfig = {
     },
     fixedWidth: 350
 }
+
+let distance = 72;
+let distanceArr = [];
+let distanceGroup = [];
+
+for(let i = 0; i < 9; i++){
+    distanceArr.push(i*distance);
+}
+
+distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr);
+

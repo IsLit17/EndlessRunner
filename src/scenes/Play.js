@@ -46,9 +46,11 @@ class Play extends Phaser.Scene {
         // create enemies
         this.enemies = [numEnemies];
         for (let i = 0; i < numEnemies; i++) {
-            this.enemies[i] = new Enemy(this, 96*Phaser.Math.Between(1, game.config.width/96-1), 0, 'enemy', 0).setOrigin(0, 0);
+            let random = Phaser.Utils.Array.RemoveRandomElement(distanceGroup);
+            this.enemies[i] = new Enemy(this, random, 0, 'enemy', 0).setOrigin(0, 0);
             this.enemies[i].setVelocityY(100);
         }
+        distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr);
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
     }
 
@@ -75,7 +77,7 @@ class Play extends Phaser.Scene {
             for (let i = 0; i < numEnemies; i++) {
                 if (this.checkCollision(this.player, this.enemies[i])) {
                     this.enemies[i].reset();
-                    //this.lowerHealth();
+                    this.lowerHealth();
                 }
                 if(this.enemies[i].y > game.config.height) {
                     this.enemies[i].reset();

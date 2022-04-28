@@ -43,6 +43,7 @@ let gameConfig = {
     fixedWidth: 350
 }
 
+<<<<<<< HEAD
 let distance = 72;
 let distanceArr = [];
 let distanceGroup = [];
@@ -53,3 +54,6 @@ for(let i = 0; i < 9; i++){
 
 distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr);
 
+=======
+let timerText, timerEvent;
+>>>>>>> 115fb68c1a43f311fd8ff86378e1f9fb7ee851c0

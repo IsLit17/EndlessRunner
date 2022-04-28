@@ -27,7 +27,7 @@ let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyR;
 let numEnemies = 6;
 let counter = 0;
 // maximum health
-let maxHealth = 10;
+let maxHealth = 3;
 
 // score config
 let gameConfig = {

@@ -27,7 +27,7 @@ let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyR;
 let numEnemies = 6;
 let counter = 0;
 // maximum health
-let maxHealth = 10;
+let maxHealth = 3;
 
 // score config
 let gameConfig = {
@@ -44,9 +44,9 @@ let gameConfig = {
 }
 
 
-let distance = 72;
-let distanceArr = [];
-let distanceGroup = [];
+let distance = 72; //base distance
+let distanceArr = []; //positions array base
+let distanceGroup = []; //randomizer array
 
 for(let i = 0; i < 9; i++){
     distanceArr.push(i*distance);

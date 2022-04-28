@@ -18,7 +18,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         if(counter == numEnemies){
             counter = 0;
             distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr);
-            //console.log(distanceGroup);
         }
     }
 }

@@ -53,7 +53,7 @@ class Play extends Phaser.Scene {
             this.enemies[i] = new Enemy(this, random, 0, 'enemy', 0).setOrigin(0, 0);
             this.enemies[i].setVelocityY(100);
         }
-        distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr);
+        distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr); //set randomizer to the inital state
 
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
 

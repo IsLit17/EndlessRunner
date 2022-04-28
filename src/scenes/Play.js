@@ -92,7 +92,8 @@ class Play extends Phaser.Scene {
                 if(this.enemies[i].y > game.config.height) {
                     this.enemies[i].reset();
                     while(colliderReset.length != 0){
-                        colliderReset.pop().setVelocityY(100);
+                        let enemy = colliderReset.pop();
+                        enemy.setVelocityY(100);
                     }
                 }
             }

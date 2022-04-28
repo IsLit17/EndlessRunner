@@ -11,7 +11,6 @@ class Play extends Phaser.Scene {
         this.load.image('item2', './assets/enemy2.png');
         this.load.image('item3', './assets/enemy3.png');
         this.load.image('item4', './assets/enemy4.png');
-        this.load.image('item5', './assets/enemy5.png');
         this.load.image('health0', './assets/healthBar0.png');
         this.load.image('health1', './assets/healthBar1.png');
         this.load.image('health2', './assets/healthBar2.png');
@@ -25,7 +24,7 @@ class Play extends Phaser.Scene {
         //health variable and game over flag
         this.gameOver = false;
         this.health = maxHealth;
-        this.healthBar = this.add.image(game.config.width/2 + borderPadding*15, borderUISize + borderPadding - 8, 'health3').setOrigin(0,0);
+        this.healthBar = this.add.image(game.config.width/2 + borderPadding*15, borderUISize + borderPadding - 8, 'health' + maxHealth).setOrigin(0,0);
 
         // display health
         let scoreConfig = {
@@ -39,7 +38,6 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 150
         }
-        //this.lives = this.add.text(game.config.width/2, borderUISize + borderPadding*2, 'Lives: ' + this.health, scoreConfig);
 
         // set keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -102,18 +100,15 @@ class Play extends Phaser.Scene {
                     case 'item1':
                         console.log(this.item.texture.key);
                         this.player.speedUp();
-
                         break;
                     case 'item2':
                         console.log(this.item.texture.key);
+                        this.increaseHealth();
                         break;
                     case 'item3':
                         console.log(this.item.texture.key);
                         break;
                     case 'item4':
-                        console.log(this.item.texture.key);
-                        break;
-                    case 'item5':
                         console.log(this.item.texture.key);
                         break;
                     default:
@@ -142,8 +137,17 @@ class Play extends Phaser.Scene {
     lowerHealth() {
         this.health -= 1;
         if (this.health <= 0) {
-            this.health = 0
+            this.health = 0;
             this.gameOver = true;
+        }
+        this.healthBar.setTexture('health' + this.health);
+
+    }
+
+    increaseHealth() {
+        this.health += 1;
+        if (this.health >= maxHealth) {
+            this.health = maxHealth;
         }
         this.healthBar.setTexture('health' + this.health);
 

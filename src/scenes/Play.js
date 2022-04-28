@@ -56,7 +56,6 @@ class Play extends Phaser.Scene {
         distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr); //set randomizer to the inital state
 
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
-
         // timer/score
         timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTime, callbackScope: this, loop: true });
         this.curTime = 0;
@@ -83,15 +82,18 @@ class Play extends Phaser.Scene {
         if (!this.gameOver) {
             // update player position
             this.player.update();
-
             // collision for enemies
             for (let i = 0; i < numEnemies; i++) {
                 if (this.checkCollision(this.player, this.enemies[i])) {
                     this.enemies[i].reset();
-                    this.lowerHealth();
+                    colliderReset.push(this.enemies[i].setVelocityY(0));
+                    //this.lowerHealth();
                 }
                 if(this.enemies[i].y > game.config.height) {
                     this.enemies[i].reset();
+                    while(colliderReset.length != 0){
+                        colliderReset.pop().setVelocityY(100);
+                    }
                 }
             }
 

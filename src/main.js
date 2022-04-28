@@ -47,6 +47,7 @@ let gameConfig = {
 let distance = 72; //base distance
 let distanceArr = []; //positions array base
 let distanceGroup = []; //randomizer array
+let colliderReset = [];
 
 for(let i = 0; i < 9; i++){
     distanceArr.push(i*distance);

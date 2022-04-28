@@ -12,6 +12,10 @@ class Play extends Phaser.Scene {
         this.load.image('item3', './assets/enemy3.png');
         this.load.image('item4', './assets/enemy4.png');
         this.load.image('item5', './assets/enemy5.png');
+        this.load.image('health0', './assets/healthBar0.png');
+        this.load.image('health1', './assets/healthBar1.png');
+        this.load.image('health2', './assets/healthBar2.png');
+        this.load.image('health3', './assets/healthBar3.png');
     }
 
     create() {
@@ -21,6 +25,7 @@ class Play extends Phaser.Scene {
         //health variable and game over flag
         this.gameOver = false;
         this.health = maxHealth;
+        this.healthBar = this.add.image(game.config.width/2 + borderPadding*15, borderUISize + borderPadding - 8, 'health3').setOrigin(0,0);
 
         // display health
         let scoreConfig = {
@@ -34,7 +39,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 150
         }
-        this.lives = this.add.text(game.config.width/2, borderUISize + borderPadding*2, 'Lives: ' + this.health, scoreConfig);
+        //this.lives = this.add.text(game.config.width/2, borderUISize + borderPadding*2, 'Lives: ' + this.health, scoreConfig);
 
         // set keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -49,21 +54,23 @@ class Play extends Phaser.Scene {
             this.enemies[i] = new Enemy(this, 96*Phaser.Math.Between(1, game.config.width/96-1), 0, 'enemy', 0).setOrigin(0, 0);
             this.enemies[i].setVelocityY(100);
         }
+
+        // create item 1
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
 
-        // timer/score text 
+        // timer/score
         timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTime, callbackScope: this, loop: true });
         this.curTime = 0;
-        timerText = this.add.text(game.config.width/2, borderUISize + borderPadding*2, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
+        timerText = this.add.text(game.config.width/2, borderUISize + borderPadding, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
     }
 
     update() {
         // when game is over
         if (this.gameOver) {
             this.add.text(game.config.width/2, game.config.height/2 - 8, 'GAME OVER', gameConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 - 8, 'Score: ' + this.curTime, gameConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', gameConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 136, 'or <- for Menu', gameConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Score: ' + this.curTime, gameConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 136, 'Press (R) to Restart', gameConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 208, 'or <- for Menu', gameConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.scene.restart();
             }
@@ -138,7 +145,8 @@ class Play extends Phaser.Scene {
             this.health = 0
             this.gameOver = true;
         }
-        this.lives.setText('Lives: ' + this.health);
+        this.healthBar.setTexture('health' + this.health);
+
     }
 
     updateTime() {

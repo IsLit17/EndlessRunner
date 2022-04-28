@@ -51,16 +51,17 @@ class Play extends Phaser.Scene {
         }
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
 
-        // timer/score text
-        timerEvent = this.time.addEvent({ delay: 500, callbackScope: this, loop: true });
-        timerText = this.add.text(game.config.width/2, game.config.height/2, '', { fontSize: '20px', fill: '#ffffff' });
-        //timerText.fixedToCamera = true;
+        // timer/score text 
+        timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTime, callbackScope: this, loop: true });
+        this.curTime = 0;
+        timerText = this.add.text(game.config.width/2, borderUISize + borderPadding*2, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
     }
 
     update() {
         // when game is over
         if (this.gameOver) {
             this.add.text(game.config.width/2, game.config.height/2 - 8, 'GAME OVER', gameConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 - 8, 'Score: ' + this.curTime, gameConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', gameConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 136, 'or <- for Menu', gameConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
@@ -76,9 +77,6 @@ class Play extends Phaser.Scene {
         if (!this.gameOver) {
             // update player position
             this.player.update();
-
-            // update time
-            this.updateTime();
 
             // collision for enemies
             for (let i = 0; i < numEnemies; i++) {
@@ -144,8 +142,10 @@ class Play extends Phaser.Scene {
     }
 
     updateTime() {
-        let timeCur = Math.floor(timerEvent.getProgress());
-        timerText.setText('Score: ' + timeCur);
+        if (!this.gameOver){
+            this.curTime += 1;
+            timerText.setText('Score: ' + this.curTime);
+        }
     }
 
 }

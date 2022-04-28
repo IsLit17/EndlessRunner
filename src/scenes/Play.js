@@ -53,12 +53,8 @@ class Play extends Phaser.Scene {
             this.enemies[i] = new Enemy(this, random, 0, 'enemy', 0).setOrigin(0, 0);
             this.enemies[i].setVelocityY(100);
         }
-<<<<<<< HEAD
         distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr);
-=======
 
-        // create item 1
->>>>>>> 115fb68c1a43f311fd8ff86378e1f9fb7ee851c0
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
 
         // timer/score

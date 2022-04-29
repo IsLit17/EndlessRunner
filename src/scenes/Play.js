@@ -132,7 +132,7 @@ class Play extends Phaser.Scene {
             p1.x + p1.width > p2.x && 
             p1.y < p2.y + p2.height &&
             p1.height + p1.y > p2.y) {
-                return true;
+            return true;
         } else {
             return false;
         }

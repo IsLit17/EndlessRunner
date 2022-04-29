@@ -22,10 +22,6 @@ let borderPadding = borderUISize / 3;
 
 // define keys
 let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyR;
-
-// number of enemies
-let numEnemies = 6;
-let counter = 0;
 // maximum health
 let maxHealth = 3;
 
@@ -45,15 +41,6 @@ let gameConfig = {
 
 
 let distance = 72; //base distance
-let distanceArr = []; //positions array base
-let distanceGroup = []; //randomizer array
-let colliderReset = [];
-
-for(let i = 0; i < 9; i++){
-    distanceArr.push(i*distance);
-}
-
-distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr);
 
 
 let timerText, timerEvent;

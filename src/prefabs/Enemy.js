@@ -13,11 +13,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     // position reset (NOT WORKING AT THE MOMENT)
     reset() {
         this.y = -50;
-        this.x = Phaser.Utils.Array.RemoveRandomElement(distanceGroup);
-        counter++;
-        if(counter == numEnemies){
-            counter = 0;
-            distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr);
-        }
+        //this.x = Phaser.Utils.Array.RemoveRandomElement(distanceGroup);
     }
 }

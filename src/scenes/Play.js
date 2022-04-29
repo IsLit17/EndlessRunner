@@ -18,6 +18,8 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        this.minEnemies = 6;
+        this.numEnemies = 9;
         //add background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
 
@@ -47,13 +49,22 @@ class Play extends Phaser.Scene {
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0,0);
 
         // create enemies
-        this.enemies = [numEnemies];
-        for (let i = 0; i < numEnemies; i++) {
-            let random = Phaser.Utils.Array.RemoveRandomElement(distanceGroup);
-            this.enemies[i] = new Enemy(this, random, 0, 'enemy', 0).setOrigin(0, 0);
-            this.enemies[i].setVelocityY(100);
+        this.enemies = [this.numEnemies];
+        this.positioner = new Enemy(this, -72, -50, 0, 0).setOrigin(0, 0).setVelocityY(100);
+        for (let i = 0; i < this.numEnemies; i++) {
+            //let random = Phaser.Utils.Array.RemoveRandomElement(distanceGroup);
+            let v;
+            if(i < this.minEnemies){
+                v = 100;
+            }
+            else if (i == this.numEnemies - 1){
+                v = 0
+            }
+            else{
+                v = 100*Phaser.Math.Between(0,1);
+            }
+            this.enemies[i] = new Enemy(this, distance*i, -50, 'enemy', 0).setOrigin(0, 0).setVelocityY(v);
         }
-        distanceGroup = Phaser.Utils.Objects.DeepCopy(distanceArr); //set randomizer to the inital state
 
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
         // timer/score
@@ -83,18 +94,28 @@ class Play extends Phaser.Scene {
             // update player position
             this.player.update();
             // collision for enemies
-            for (let i = 0; i < numEnemies; i++) {
+            for (let i = 0; i < this.numEnemies; i++) {
                 if (this.checkCollision(this.player, this.enemies[i])) {
-                    this.enemies[i].reset();
-                    colliderReset.push(this.enemies[i].setVelocityY(0));
+                    this.enemies[i].setVelocityY(0).reset();
                     this.lowerHealth();
                 }
-                if(this.enemies[i].y > game.config.height) {
+            }
+            if(this.positioner.y > game.config.height){
+                this.positioner.reset();
+                Phaser.Utils.Array.Shuffle(this.enemies);
+                for(let i = 0; i < this.numEnemies; i++){
                     this.enemies[i].reset();
-                    while(colliderReset.length != 0){
-                        let enemy = colliderReset.pop();
-                        enemy.setVelocityY(100);
+                    let v;
+                    if(i < this.minEnemies){
+                        v = 100;
                     }
+                    else if (i == this.numEnemies - 1){
+                        v = 0
+                    }
+                    else{
+                        v = 100*Phaser.Math.Between(0,1);
+                    }
+                    this.enemies[i].setVelocityY(v);
                 }
             }
 

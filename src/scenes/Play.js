@@ -20,6 +20,8 @@ class Play extends Phaser.Scene {
     create() {
         this.minEnemies = 6;
         this.numEnemies = 9;
+        // base speed
+        this.speed = 100;
         //add background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
 
@@ -50,18 +52,17 @@ class Play extends Phaser.Scene {
 
         // create enemies
         this.enemies = [this.numEnemies];
-        this.positioner = new Enemy(this, -72, -50, 0, 0).setOrigin(0, 0).setVelocityY(100);
+        this.positioner = new Enemy(this, -72, -50, 0, 0).setOrigin(0, 0).setVelocityY(this.speed);
         for (let i = 0; i < this.numEnemies; i++) {
-            //let random = Phaser.Utils.Array.RemoveRandomElement(distanceGroup);
             let v;
             if(i < this.minEnemies){
-                v = 100;
+                v = this.speed;
             }
             else if (i == this.numEnemies - 1){
                 v = 0
             }
             else{
-                v = 100*Phaser.Math.Between(0,1);
+                v = this.speed*Phaser.Math.Between(0,1);
             }
             this.enemies[i] = new Enemy(this, distance*i, -50, 'enemy', 0).setOrigin(0, 0).setVelocityY(v);
         }
@@ -71,6 +72,8 @@ class Play extends Phaser.Scene {
         timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTime, callbackScope: this, loop: true });
         this.curTime = 0;
         timerText = this.add.text(game.config.width/2, borderUISize + borderPadding, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
+
+        this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.positioner.setVelocityY(this.speed)}, callbackScope: this, loop: true });
     }
 
     update() {
@@ -108,17 +111,17 @@ class Play extends Phaser.Scene {
             if(this.positioner.y > game.config.height){
                 this.positioner.reset();
                 Phaser.Utils.Array.Shuffle(this.enemies);
+                let v;
                 for(let i = 0; i < this.numEnemies; i++){
                     this.enemies[i].reset();
-                    let v;
                     if(i < this.minEnemies){
-                        v = 100;
+                        v = this.speed;
                     }
                     else if (i == this.numEnemies - 1){
                         v = 0
                     }
                     else{
-                        v = 100*Phaser.Math.Between(0,1);
+                        v = this.speed*Phaser.Math.Between(0,1);
                     }
                     this.enemies[i].setVelocityY(v);
                 }
@@ -137,6 +140,7 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item3':
                         console.log(this.item.texture.key);
+                        this.player.speedDown();
                         break;
                     case 'item4':
                         console.log(this.item.texture.key);

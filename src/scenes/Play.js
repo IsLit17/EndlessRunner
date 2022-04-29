@@ -73,7 +73,7 @@ class Play extends Phaser.Scene {
         this.curTime = 0;
         timerText = this.add.text(game.config.width/2, borderUISize + borderPadding, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
 
-        this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.positioner.setVelocityY(this.speed)}, callbackScope: this, loop: true });
+        this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.positioner.setVelocityY(this.speed)}, callbackScope: this, loop: true }); // enemies speed up overtime
     }
 
     update() {

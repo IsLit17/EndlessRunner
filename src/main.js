@@ -42,6 +42,6 @@ let gameConfig = {
 
 let distance = 72; //base distance
 
-
+// score
 let timerText, timerEvent;
-
+let highScore = 0;

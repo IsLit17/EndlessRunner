@@ -76,8 +76,13 @@ class Play extends Phaser.Scene {
     update() {
         // when game is over
         if (this.gameOver) {
-            this.add.text(game.config.width/2, game.config.height/2 - 8, 'GAME OVER', gameConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Score: ' + this.curTime, gameConfig).setOrigin(0.5);
+            let score = this.curTime;
+            if (score > highScore) {
+                highScore = score;
+            }
+            this.add.text(game.config.width/2, game.config.height/2 - 80, 'GAME OVER', gameConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 - 8, 'Score: ' + score, gameConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'High Score: ' + highScore, gameConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 136, 'Press (R) to Restart', gameConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 208, 'or <- for Menu', gameConfig).setOrigin(0.5);
             if (Phaser.Input.Keyboard.JustDown(keyR)) {

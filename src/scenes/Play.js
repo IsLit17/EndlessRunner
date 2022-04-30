@@ -1,7 +1,6 @@
 class Play extends Phaser.Scene {
     constructor() {
         super("playScene");
-        this.backgroundSpeed = 0.5;
     }
 
     preload() {
@@ -19,6 +18,7 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        this.backgroundSpeed = 1.5;
         this.minEnemies = 6;
         this.numEnemies = 20;
         this.maxEnemies = 15;
@@ -75,7 +75,7 @@ class Play extends Phaser.Scene {
         this.curTime = 0;
         timerText = this.add.text(game.config.width/2, borderUISize + borderPadding, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
 
-        this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.backgroundSpeed *= 1.5}, callbackScope: this, loop: true }); // enemies speed up overtime
+        this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.backgroundSpeed *= 1.2}, callbackScope: this, loop: true }); // enemies speed up overtime
         this.itemState = this.add.text(0, borderUISize + borderPadding, 'Equipment:', { fontSize: '20px', fill: '#ffffff' }); //item bag
     }
 

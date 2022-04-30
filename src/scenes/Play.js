@@ -23,7 +23,6 @@ class Play extends Phaser.Scene {
         this.maxEnemies = 15;
         // base speed
         this.speed = 100;
-        this.playerShield = false;
         //add background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
 
@@ -76,7 +75,7 @@ class Play extends Phaser.Scene {
         timerText = this.add.text(game.config.width/2, borderUISize + borderPadding, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
 
         this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2;}, callbackScope: this, loop: true }); // enemies speed up overtime
-        this.itemState = this.add.text(0, borderUISize + borderPadding, 'Equipment:', { fontSize: '20px', fill: '#ffffff' });
+        this.itemState = this.add.text(0, borderUISize + borderPadding, 'Equipment:', { fontSize: '20px', fill: '#ffffff' }); //item bag
     }
 
     update() {
@@ -159,6 +158,7 @@ class Play extends Phaser.Scene {
                         if(!itemSearch('\nHoly Cross') && itemStack.length < 2){
                             itemStack.push('\nHoly Cross');
                             this.itemState.text = 'Equipment:' + itemStack;
+                            this.curTime += 20;
                         }
                         break;
                     default:

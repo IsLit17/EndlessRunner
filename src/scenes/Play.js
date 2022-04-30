@@ -1,12 +1,13 @@
 class Play extends Phaser.Scene {
     constructor() {
         super("playScene");
+        this.backgroundSpeed = 0.5;
     }
 
     preload() {
         this.load.image('background', './assets/background.png');
         this.load.image('player', './assets/player.png');
-        this.load.image('enemy', './assets/obs.png');
+        this.load.image('enemy', './assets/zombie.png');
         this.load.image('item1', './assets/speedUp.png');
         this.load.image('item2', './assets/heart.png');
         this.load.image('item3', './assets/enemySlow.png');
@@ -20,7 +21,8 @@ class Play extends Phaser.Scene {
 
     create() {
         this.minEnemies = 6;
-        this.numEnemies = 9;
+        this.numEnemies = 20;
+        this.maxEnemies = 15;
         // base speed
         this.speed = 100;
         //add background
@@ -53,19 +55,19 @@ class Play extends Phaser.Scene {
 
         // create enemies
         this.enemies = [this.numEnemies];
-        this.positioner = new Enemy(this, -72, -50, 0, 0).setOrigin(0, 0).setVelocityY(this.speed);
+        this.positioner = new Enemy(this, -72, -100, 0, 0).setOrigin(0, 0).setVelocityY(this.speed);
         for (let i = 0; i < this.numEnemies; i++) {
             let v;
             if(i < this.minEnemies){
                 v = this.speed;
             }
-            else if (i == this.numEnemies - 1){
-                v = 0
+            else if(i > this.maxEnemies - 1 ){
+                v = 0;
             }
             else{
                 v = this.speed*Phaser.Math.Between(0,1);
             }
-            this.enemies[i] = new Enemy(this, distance*i, -50, 'enemy', 0).setOrigin(0, 0).setVelocityY(v);
+            this.enemies[i] = new Enemy(this, distance*i, Phaser.Math.Between(-30, -100), 'enemy', 0).setOrigin(0, 0).setVelocityY(v);
         }
 
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
@@ -74,12 +76,8 @@ class Play extends Phaser.Scene {
         this.curTime = 0;
         timerText = this.add.text(game.config.width/2, borderUISize + borderPadding, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
 
-        this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.positioner.setVelocityY(this.speed)}, callbackScope: this, loop: true });
-        this.anims.create({
-            key: 'splatter',
-            frames: this.anims.generateFrameNumbers('splatter', { start: 0, end: 7, first: 0}),
-            frameRate: 30
-        });
+        this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.backgroundSpeed *= 1.5}, callbackScope: this, loop: true }); // enemies speed up overtime
+        this.itemState = this.add.text(0, borderUISize + borderPadding, 'Equipment:', { fontSize: '20px', fill: '#ffffff' }); //item bag
     }
 
     update() {
@@ -102,20 +100,25 @@ class Play extends Phaser.Scene {
             }
         }
         // parallax scrolling
-        this.background.tilePositionY -= 4;
+        this.background.tilePositionY -= this.backgroundSpeed;
 
         if (!this.gameOver) {
             // update player position
             this.player.update();
             // collision for enemies
             for (let i = 0; i < this.numEnemies; i++) {
-                if (this.checkCollision(this.player, this.enemies[i])) {
+                if (this.checkCollision(this.player, this.enemies[i]) && !this.player.shadow) {
                     this.enemies[i].setVelocityY(0).reset();
-                    this.lowerHealth();
+                    Phaser.Utils.Array.RemoveRandomElement(itemStack);
+                    this.itemState.text = 'Equipment:' + itemStack;
+                    if(!this.player.armor){this.lowerHealth()};
+                    this.player.shadow = true;
+                    this.time.addEvent({delay: 1000,callback: function(){this.player.shadow = false}, callbackScope: this });
                 }
             }
             if(this.positioner.y > game.config.height){
-                this.positioner.reset();
+                this.positioner.y = -100;
+                this.positioner.setVelocityY(this.speed);
                 Phaser.Utils.Array.Shuffle(this.enemies);
                 let v;
                 for(let i = 0; i < this.numEnemies; i++){
@@ -123,8 +126,8 @@ class Play extends Phaser.Scene {
                     if(i < this.minEnemies){
                         v = this.speed;
                     }
-                    else if (i == this.numEnemies - 1){
-                        v = 0
+                    else if(i > this.maxEnemies - 1 ){
+                        v = 0;
                     }
                     else{
                         v = this.speed*Phaser.Math.Between(0,1);
@@ -138,7 +141,10 @@ class Play extends Phaser.Scene {
                 switch(this.item.texture.key){
                     case 'item1':
                         console.log(this.item.texture.key);
-                        this.player.speedUp();
+                        if(!itemSearch('\nMagic Shoes') && itemStack.length < 2 ){
+                            itemStack.push('\nMagic Shoes');
+                            this.itemState.text = 'Equipment:' + itemStack;
+                        }
                         break;
                     case 'item2':
                         console.log(this.item.texture.key);
@@ -146,10 +152,18 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item3':
                         console.log(this.item.texture.key);
-                        this.player.speedDown();
+                        if(!itemSearch('\nSalt Armor') && itemStack.length < 2){
+                            itemStack.push('\nSalt Armor');
+                            this.itemState.text = 'Equipment:' + itemStack;
+                        }
                         break;
                     case 'item4':
                         console.log(this.item.texture.key);
+                        if(!itemSearch('\nHoly Cross') && itemStack.length < 2){
+                            itemStack.push('\nHoly Cross');
+                            this.itemState.text = 'Equipment:' + itemStack;
+                            this.curTime += 20;
+                        }
                         break;
                     default:
                         console.log("default");
@@ -197,4 +211,6 @@ class Play extends Phaser.Scene {
             timerText.setText('Score: ' + this.curTime);
         }
     }
+
+
 }

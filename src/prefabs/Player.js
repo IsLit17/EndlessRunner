@@ -23,7 +23,7 @@ class Player extends Phaser.GameObjects.Sprite {
             this.moveSpeed = 8;
         }
 
-        if(!itemSearch('\nHoly Armor')){
+        if(!itemSearch('\nSalt Armor')){
             this.armor = false;
         }
         else{

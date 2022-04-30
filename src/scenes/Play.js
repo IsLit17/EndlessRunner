@@ -149,13 +149,17 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item3':
                         console.log(this.item.texture.key);
-                        if(!itemSearch('\nHoly Armor') && itemStack.length < 2){
-                            itemStack.push('\nHoly Armor');
+                        if(!itemSearch('\nSalt Armor') && itemStack.length < 2){
+                            itemStack.push('\nSalt Armor');
                             this.itemState.text = 'Equipment:' + itemStack;
                         }
                         break;
                     case 'item4':
                         console.log(this.item.texture.key);
+                        if(!itemSearch('\nHoly Cross') && itemStack.length < 2){
+                            itemStack.push('\nHoly Cross');
+                            this.itemState.text = 'Equipment:' + itemStack;
+                        }
                         break;
                     default:
                         console.log("default");

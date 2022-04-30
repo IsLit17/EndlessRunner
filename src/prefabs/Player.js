@@ -16,14 +16,14 @@ class Player extends Phaser.GameObjects.Sprite {
             this.x += this.moveSpeed;
         }
 
-        if(!itemSearch('Magic Shoes\n')){
+        if(!itemSearch('\nMagic Shoes')){
             this.moveSpeed = 4;
         }
         else{
             this.moveSpeed = 8;
         }
 
-        if(!itemSearch('Holy Armor\n')){
+        if(!itemSearch('\nHoly Armor')){
             this.armor = false;
         }
         else{

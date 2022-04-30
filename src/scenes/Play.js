@@ -137,7 +137,7 @@ class Play extends Phaser.Scene {
                 switch(this.item.texture.key){
                     case 'item1':
                         console.log(this.item.texture.key);
-                        if(!itemSearch('\nMagic Shoes')){
+                        if(!itemSearch('\nMagic Shoes') && itemStack.length < 2 ){
                             itemStack.push('\nMagic Shoes');
                             this.itemState.text = 'Equipment:' + itemStack;
                         }
@@ -148,7 +148,7 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item3':
                         console.log(this.item.texture.key);
-                        if(!itemSearch('\nHoly Armor')){
+                        if(!itemSearch('\nHoly Armor') && itemStack.length < 2){
                             itemStack.push('\nHoly Armor');
                             this.itemState.text = 'Equipment:' + itemStack;
                         }

@@ -4,27 +4,31 @@ class Player extends Phaser.GameObjects.Sprite {
         this.keyLeft = kLeft;
         this.keyRight = kRight;
         this.moveSpeed = 4;
+        this.armor = false;
         scene.add.existing(this);
     }
 
     update() {
-        if (this.keyLeft.isDown && this.x >= borderUISize + this.width) {
+        if (this.keyLeft.isDown && this.x >= 0) {
             this.x -= this.moveSpeed;
         }
-        if (this.keyRight.isDown && this.x <= game.config.width - borderUISize - this.width) {
+        if (this.keyRight.isDown && this.x <= game.config.width - this.width) {
             this.x += this.moveSpeed;
         }
-    }
 
-    speedUp() {
-        this.moveSpeed *= 1.5;
-        if (this.moveSpeed >= 13.5) {
-            this.moveSpeed = 13.5;
+        if(!itemSearch('Magic Shoes\n')){
+            this.moveSpeed = 4;
         }
-    }
+        else{
+            this.moveSpeed = 8;
+        }
 
-    speedDown(){
-        this.moveSpeed /= 1.5;
+        if(!itemSearch('Holy Armor\n')){
+            this.armor = false;
+        }
+        else{
+            this.armor = true;
+        }
     }
 
     

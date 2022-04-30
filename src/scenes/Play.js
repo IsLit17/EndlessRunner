@@ -22,6 +22,7 @@ class Play extends Phaser.Scene {
         this.numEnemies = 9;
         // base speed
         this.speed = 100;
+        this.playerShield = false;
         //add background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
 
@@ -64,7 +65,7 @@ class Play extends Phaser.Scene {
             else{
                 v = this.speed*Phaser.Math.Between(0,1);
             }
-            this.enemies[i] = new Enemy(this, distance*i, -50, 'enemy', 0).setOrigin(0, 0).setVelocityY(v);
+            this.enemies[i] = new Enemy(this, distance*i, Phaser.Math.Between(-30, -100), 'enemy', 0).setOrigin(0, 0).setVelocityY(v);
         }
 
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
@@ -73,7 +74,8 @@ class Play extends Phaser.Scene {
         this.curTime = 0;
         timerText = this.add.text(game.config.width/2, borderUISize + borderPadding, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
 
-        this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.positioner.setVelocityY(this.speed)}, callbackScope: this, loop: true }); // enemies speed up overtime
+        this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2;}, callbackScope: this, loop: true }); // enemies speed up overtime
+        this.itemState = this.add.text(0, borderUISize + borderPadding, 'Equipment:', { fontSize: '20px', fill: '#ffffff' });
     }
 
     update() {
@@ -105,11 +107,14 @@ class Play extends Phaser.Scene {
             for (let i = 0; i < this.numEnemies; i++) {
                 if (this.checkCollision(this.player, this.enemies[i])) {
                     this.enemies[i].setVelocityY(0).reset();
-                    this.lowerHealth();
+                    Phaser.Utils.Array.RemoveRandomElement(itemStack);
+                    this.itemState.text = 'Equipment:' + itemStack;
+                    if(!this.player.armor){this.lowerHealth()};
                 }
             }
             if(this.positioner.y > game.config.height){
-                this.positioner.reset();
+                this.positioner.y = -100;
+                this.positioner.setVelocityY(this.speed);
                 Phaser.Utils.Array.Shuffle(this.enemies);
                 let v;
                 for(let i = 0; i < this.numEnemies; i++){
@@ -132,7 +137,10 @@ class Play extends Phaser.Scene {
                 switch(this.item.texture.key){
                     case 'item1':
                         console.log(this.item.texture.key);
-                        this.player.speedUp();
+                        if(!itemSearch('\nMagic Shoes')){
+                            itemStack.push('\nMagic Shoes');
+                            this.itemState.text = 'Equipment:' + itemStack;
+                        }
                         break;
                     case 'item2':
                         console.log(this.item.texture.key);
@@ -140,7 +148,10 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item3':
                         console.log(this.item.texture.key);
-                        this.player.speedDown();
+                        if(!itemSearch('\nHoly Armor')){
+                            itemStack.push('\nHoly Armor');
+                            this.itemState.text = 'Equipment:' + itemStack;
+                        }
                         break;
                     case 'item4':
                         console.log(this.item.texture.key);
@@ -191,4 +202,6 @@ class Play extends Phaser.Scene {
             timerText.setText('Score: ' + this.curTime);
         }
     }
+
+
 }

@@ -39,6 +39,16 @@ let gameConfig = {
     fixedWidth: 350
 }
 
+let itemStack = [];
+
+function itemSearch(item){
+    for(let i = 0; i < itemStack.length; i++){
+        if(itemStack[i] == item){
+            return true;
+        }
+    }
+    return false;
+}
 
 let distance = 72; //base distance
 

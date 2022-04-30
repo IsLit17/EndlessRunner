@@ -105,11 +105,13 @@ class Play extends Phaser.Scene {
             this.player.update();
             // collision for enemies
             for (let i = 0; i < this.numEnemies; i++) {
-                if (this.checkCollision(this.player, this.enemies[i])) {
+                if (this.checkCollision(this.player, this.enemies[i]) && !this.player.shadow) {
                     this.enemies[i].setVelocityY(0).reset();
                     Phaser.Utils.Array.RemoveRandomElement(itemStack);
                     this.itemState.text = 'Equipment:' + itemStack;
                     if(!this.player.armor){this.lowerHealth()};
+                    this.player.shadow = true;
+                    this.time.addEvent({delay: 1000,callback: function(){this.player.shadow = false}, callbackScope: this });
                 }
             }
             if(this.positioner.y > game.config.height){

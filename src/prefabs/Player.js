@@ -5,6 +5,7 @@ class Player extends Phaser.GameObjects.Sprite {
         this.keyRight = kRight;
         this.moveSpeed = 4;
         this.armor = false;
+        this.shadow = false;
         scene.add.existing(this);
     }
 
@@ -12,7 +13,7 @@ class Player extends Phaser.GameObjects.Sprite {
         if (this.keyLeft.isDown && this.x >= 0) {
             this.x -= this.moveSpeed;
         }
-        if (this.keyRight.isDown && this.x <= game.config.width) {
+        if (this.keyRight.isDown && this.x <= game.config.width - this.width) {
             this.x += this.moveSpeed;
         }
 
@@ -28,6 +29,13 @@ class Player extends Phaser.GameObjects.Sprite {
         }
         else{
             this.armor = true;
+        }
+
+        if(this.shadow){
+            this.alpha = 0.5;
+        }
+        else{
+            this.alpha = 1;
         }
     }
 

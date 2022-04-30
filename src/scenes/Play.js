@@ -20,6 +20,7 @@ class Play extends Phaser.Scene {
     create() {
         this.minEnemies = 6;
         this.numEnemies = 20;
+        this.maxEnemies = 15;
         // base speed
         this.speed = 100;
         this.playerShield = false;
@@ -58,6 +59,9 @@ class Play extends Phaser.Scene {
             let v;
             if(i < this.minEnemies){
                 v = this.speed;
+            }
+            else if(i > this.maxEnemies - 1 ){
+                v = 0;
             }
             else{
                 v = this.speed*Phaser.Math.Between(0,1);
@@ -118,6 +122,9 @@ class Play extends Phaser.Scene {
                     this.enemies[i].reset();
                     if(i < this.minEnemies){
                         v = this.speed;
+                    }
+                    else if(i > this.maxEnemies - 1 ){
+                        v = 0;
                     }
                     else{
                         v = this.speed*Phaser.Math.Between(0,1);

@@ -50,7 +50,7 @@ function itemSearch(item){
     return false;
 }
 
-let distance = 72; //base distance
+let distance = 32; //base distance
 
 // score
 let timerText, timerEvent;

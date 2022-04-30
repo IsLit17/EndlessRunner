@@ -15,6 +15,7 @@ class Play extends Phaser.Scene {
         this.load.image('health1', './assets/healthBar1.png');
         this.load.image('health2', './assets/healthBar2.png');
         this.load.image('health3', './assets/healthBar3.png');
+        this.load.spritesheet('splatter', './assets/splatter.png', {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 7});
     }
 
     create() {
@@ -74,6 +75,11 @@ class Play extends Phaser.Scene {
         timerText = this.add.text(game.config.width/2, borderUISize + borderPadding, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
 
         this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.positioner.setVelocityY(this.speed)}, callbackScope: this, loop: true });
+        this.anims.create({
+            key: 'splatter',
+            frames: this.anims.generateFrameNumbers('splatter', { start: 0, end: 7, first: 0}),
+            frameRate: 30
+        });
     }
 
     update() {

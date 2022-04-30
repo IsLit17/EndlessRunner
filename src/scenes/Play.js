@@ -15,6 +15,7 @@ class Play extends Phaser.Scene {
         this.load.image('health1', './assets/healthBar1.png');
         this.load.image('health2', './assets/healthBar2.png');
         this.load.image('health3', './assets/healthBar3.png');
+        this.load.spritesheet('splatter', './assets/splatter.png', {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 7});
     }
 
     create() {
@@ -24,6 +25,7 @@ class Play extends Phaser.Scene {
         this.maxEnemies = 15;
         // base speed
         this.speed = 100;
+        this.backgroundSpeed = 0.5;
         //add background
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
 
@@ -70,6 +72,7 @@ class Play extends Phaser.Scene {
         }
 
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
+
         // timer/score
         timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTime, callbackScope: this, loop: true });
         this.curTime = 0;
@@ -77,6 +80,13 @@ class Play extends Phaser.Scene {
 
         this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.backgroundSpeed *= 1.2}, callbackScope: this, loop: true }); // enemies speed up overtime
         this.itemState = this.add.text(0, borderUISize + borderPadding, 'Equipment:', { fontSize: '20px', fill: '#ffffff' }); //item bag
+
+        // anim configs
+        this.anims.create({
+            key: 'splatter',
+            frames: this.anims.generateFrameNumbers('splatter', { start: 0, end: 7, first: 0}),
+            frameRate: 30
+        });
     }
 
     update() {
@@ -107,6 +117,7 @@ class Play extends Phaser.Scene {
             // collision for enemies
             for (let i = 0; i < this.numEnemies; i++) {
                 if (this.checkCollision(this.player, this.enemies[i]) && !this.player.shadow) {
+                    this.playSplatter(this.enemies[i]);
                     this.enemies[i].setVelocityY(0).reset();
                     Phaser.Utils.Array.RemoveRandomElement(itemStack);
                     this.itemState.text = 'Equipment:' + itemStack;
@@ -210,6 +221,13 @@ class Play extends Phaser.Scene {
             timerText.setText('Score: ' + this.curTime);
         }
     }
-
-
+    playSplatter(enem) {
+        enem.alpha = 0;
+        let blood = this.add.sprite(enem.x, enem.y, 'splatter').setOrigin(0, 0);
+        blood.anims.play('splatter');
+        blood.on('animationcomplete', () => {
+            enem.alpha = 1;
+            blood.destroy();
+        });
+    }
 }

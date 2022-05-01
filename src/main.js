@@ -50,8 +50,21 @@ function itemSearch(item){
     return false;
 }
 
+let saveNum = 0;
+function randomNum(){
+    let ret = Phaser.Math.Between(1,4);
+    while(ret == saveNum){
+        ret = Phaser.Math.Between(1,4);
+    }
+    saveNum = ret;
+    return ret;
+}
+
+
 let distance = 32; //base distance
 
 // score
 let timerText, timerEvent;
 let highScore = 0;
+
+//Our team are proud of 

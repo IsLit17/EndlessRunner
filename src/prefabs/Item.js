@@ -2,7 +2,7 @@ class Item extends Phaser.Physics.Arcade.Sprite {
 
     constructor (scene, x, y, frame)
     {
-        super(scene, x, y, 'item'+ Phaser.Math.Between(1, 4), frame);
+        super(scene, x, y, 'item'+ randomNum(), frame);
 
         //  You can either do this:
         scene.add.existing(this);

@@ -17,7 +17,7 @@ class Play extends Phaser.Scene {
         this.load.image('health3', './assets/healthBar3.png');
         this.load.spritesheet('playerAnim', './assets/playerAnim.png', {frameWidth: 26, frameHeight: 48, startFrame: 0, endFrame: 5});
         this.load.spritesheet('splatter', './assets/splatter.png', {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 7});
-        this.load.spritesheet('zombieAnim', './assets/zombieAnim.png', {frameWidth: 20, frameHeight: 32, startFrame: 0, endFrame: 7});
+        this.load.spritesheet('zombieAnim', './assets/zombieAnim.png', {frameWidth: 20, frameHeight: 32, startFrame: 0, endFrame: 6});
     }
 
     create() {
@@ -70,7 +70,7 @@ class Play extends Phaser.Scene {
             else{
                 v = this.speed*Phaser.Math.Between(0,1);
             }
-            this.enemies[i] = new Enemy(this, distance*i, Phaser.Math.Between(-30, -100), 'enemy', 0).setOrigin(0, 0).setVelocityY(v);
+            this.enemies[i] = new Enemy(this, distance*i, Phaser.Math.Between(-30, -100), 'zombieAnim', 0).setOrigin(0, 0).setVelocityY(v);
         }
 
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
@@ -90,13 +90,13 @@ class Play extends Phaser.Scene {
             frameRate: 30
         });
 
-        // this.anims.create({
-        //     key: 'zombieAnim',
-        //     frames: this.anims.generateFrameNumbers('zombieAnim', { start: 0, end: 5, first: 0}),
-        //     frameRate: 10,
-        //     repeat: -1
-        // });
-        // this.enemy.play('zombieAnim');
+        this.anims.create({
+            key: 'zombieAnim',
+            frames: this.anims.generateFrameNumbers('zombieAnim', { start: 0, end: 6, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.numEnemies.play('zombieAnim');
 
         this.anims.create({
             key: 'playerAnim',

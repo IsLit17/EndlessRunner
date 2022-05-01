@@ -15,6 +15,7 @@ class Play extends Phaser.Scene {
         this.load.image('health1', './assets/healthBar1.png');
         this.load.image('health2', './assets/healthBar2.png');
         this.load.image('health3', './assets/healthBar3.png');
+        this.load.spritesheet('playerAnim', './assets/playerAnim.png', {frameWidth: 26, frameHeight: 48, startFrame: 0, endFrame: 4});
         this.load.spritesheet('splatter', './assets/splatter.png', {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 7});
     }
 
@@ -52,7 +53,7 @@ class Play extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         // create player sprite
-        this.player = new Player(this, game.config.width/2, game.config.height/2, 'player', 0, keyLEFT, keyRIGHT).setOrigin(0,0);
+        this.player = new Player(this, game.config.width/2, game.config.height/2, 'playerAnim', 0, keyLEFT, keyRIGHT).setOrigin(0,0);
 
         // create enemies
         this.enemies = [this.numEnemies];
@@ -87,6 +88,14 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('splatter', { start: 0, end: 7, first: 0}),
             frameRate: 30
         });
+
+        this.anims.create({
+            key: 'playerAnim',
+            frames: this.anims.generateFrameNumbers('playerAnim', { start: 0, end: 4, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.player.play('playerAnim');
     }
 
     update() {

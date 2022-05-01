@@ -94,7 +94,8 @@ class Play extends Phaser.Scene {
         if (this.gameOver) {
             let score = this.curTime;
             if (score > highScore) {
-                highScore = score;
+                localStorage.setItem("highStorage", score);
+                highScore = localStorage.getItem("highStorage");
             }
             this.add.text(game.config.width/2, game.config.height/2 - 80, 'GAME OVER', gameConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 - 8, 'Score: ' + score, gameConfig).setOrigin(0.5);

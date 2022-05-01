@@ -65,6 +65,5 @@ let distance = 32; //base distance
 
 // score
 let timerText, timerEvent;
-let highScore = 0;
-
+let highScore = localStorage.getItem("highStorage");
 //Our team are proud of 

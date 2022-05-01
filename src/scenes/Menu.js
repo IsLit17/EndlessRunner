@@ -24,11 +24,14 @@ class Menu extends Phaser.Scene {
     menuConfig.color = '#000';
     this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press ← arrow to start the game', menuConfig).setOrigin(0.5);
     this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding * 5, 'Press → arrow for controls', menuConfig).setOrigin(0.5);
+    this.highScoreText = this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding * 9, 'High Score: ' + highScore, menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/2 + borderUISize*3 + borderPadding * 7, 'Press R to reset High Score', menuConfig).setOrigin(0.5);
 
 
     // define keys
     keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+    keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     }
 
     update() {
@@ -37,6 +40,10 @@ class Menu extends Phaser.Scene {
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
             this.scene.start('controlScene');
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+            localStorage.setItem("highStorage", 0);
+            this.highScoreText.text = 'High Score: ' + localStorage.getItem("highStorage");
         }
     }
 }

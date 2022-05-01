@@ -53,8 +53,31 @@ class Play extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
+        // anim configs
+        this.anims.create({
+            key: 'splatter',
+            frames: this.anims.generateFrameNumbers('splatter', { start: 0, end: 7, first: 0}),
+            frameRate: 30
+        });
+
+        this.anims.create({
+            key: 'zombieAnim',
+            frames: this.anims.generateFrameNumbers('zombieAnim', { start: 0, end: 6, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'playerAnim',
+            frames: this.anims.generateFrameNumbers('playerAnim', { start: 0, end: 5, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+
         // create player sprite
         this.player = new Player(this, game.config.width/2, game.config.height/2, 'playerAnim', 0, keyLEFT, keyRIGHT).setOrigin(0,0);
+        this.player.play('playerAnim');
 
         // create enemies
         this.enemies = [this.numEnemies];
@@ -71,6 +94,7 @@ class Play extends Phaser.Scene {
                 v = this.speed*Phaser.Math.Between(0,1);
             }
             this.enemies[i] = new Enemy(this, distance*i, Phaser.Math.Between(-30, -100), 'zombieAnim', 0).setOrigin(0, 0).setVelocityY(v);
+            this.enemies[i].play('zombieAnim');
         }
 
         this.item = new Item(this, game.config.width/2, 0,0).setOrigin(0,0);
@@ -82,29 +106,6 @@ class Play extends Phaser.Scene {
 
         this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.backgroundSpeed *= 1.2}, callbackScope: this, loop: true }); // enemies speed up overtime
         this.itemState = this.add.text(0, borderUISize + borderPadding, 'Equipment:', { fontSize: '20px', fill: '#ffffff' }); //item bag
-
-        // anim configs
-        this.anims.create({
-            key: 'splatter',
-            frames: this.anims.generateFrameNumbers('splatter', { start: 0, end: 7, first: 0}),
-            frameRate: 30
-        });
-
-        this.anims.create({
-            key: 'zombieAnim',
-            frames: this.anims.generateFrameNumbers('zombieAnim', { start: 0, end: 6, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.numEnemies.play('zombieAnim');
-
-        this.anims.create({
-            key: 'playerAnim',
-            frames: this.anims.generateFrameNumbers('playerAnim', { start: 0, end: 5, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.player.play('playerAnim');
     }
 
     update() {

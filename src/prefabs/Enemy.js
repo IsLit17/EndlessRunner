@@ -10,7 +10,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     }
 
-    // position reset (NOT WORKING AT THE MOMENT)
+    // position reset
     reset() {
         this.y = Phaser.Math.Between(-30, -100);
     }

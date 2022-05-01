@@ -90,14 +90,14 @@ class Play extends Phaser.Scene {
             frameRate: 30
         });
 
-        this.anims.create({
-            key: 'zombieAnim',
-            frames: this.anims.generateFrameNumbers('zombieAnim', { start: 0, end: 5, first: 0}),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.enemy.play('zombieAnim');
-        
+        // this.anims.create({
+        //     key: 'zombieAnim',
+        //     frames: this.anims.generateFrameNumbers('zombieAnim', { start: 0, end: 5, first: 0}),
+        //     frameRate: 10,
+        //     repeat: -1
+        // });
+        // this.enemy.play('zombieAnim');
+
         this.anims.create({
             key: 'playerAnim',
             frames: this.anims.generateFrameNumbers('playerAnim', { start: 0, end: 5, first: 0}),

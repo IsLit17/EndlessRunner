@@ -17,7 +17,7 @@ class Play extends Phaser.Scene {
         this.load.image('health3', './assets/healthBar3.png');
         this.load.spritesheet('playerAnim', './assets/playerAnim.png', {frameWidth: 26, frameHeight: 48, startFrame: 0, endFrame: 5});
         this.load.spritesheet('splatter', './assets/splatter.png', {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 7});
-        this.load.spritesheet('zombieAnim', './assets/zombieAnim.png', {frameWidth: 20, frameHeight: 32, startFrame: 0, endFrame: 6});
+        this.load.spritesheet('zombieAnim', './assets/zombieAnim.png', {frameWidth: 20, frameHeight: 32, startFrame: 0, endFrame: 5});
     }
 
     create() {

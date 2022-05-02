@@ -13,6 +13,7 @@ class Menu extends Phaser.Scene {
         this.load.audio('salt_armor', './assets/salt_armor.wav');
         this.load.audio('enemyHit', './assets/enemyHit.wav');
         this.load.audio('bgm', './assets/bgm.wav');
+        this.load.audio('fullbag', './assets/full_bag.wav');
 
         //load image
         this.load.image('menu', './assets/MenuScreen.png');

@@ -1,4 +1,7 @@
-// main.js
+
+//Zachary Hollaway, Sheel Kulkarni, Louis Lim
+//Title: Zombie Runner
+//Published: 05/01/2022
 
 let config = {
     type: Phaser.CANVAS,

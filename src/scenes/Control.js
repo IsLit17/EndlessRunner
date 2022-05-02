@@ -5,9 +5,14 @@ class Control extends Phaser.Scene {
 
     preload() {
         this.load.image('control', './assets/controlScene.png');
+        this.load.audio('bgm', './assets/bgm.wav');
     }
 
     create() {
+        // background music
+        this.bgm = this.sound.add('bgm');
+        this.bgm.play();
+        this.bgm.loop = true;
 
         // menu text configuration
         let menuConfig = {
@@ -31,6 +36,7 @@ class Control extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.bgm.stop();
             this.scene.start('menuScene');
         }
     }

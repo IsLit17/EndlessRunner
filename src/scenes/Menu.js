@@ -28,8 +28,8 @@ class Menu extends Phaser.Scene {
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Chiller',
-            fontSize: '50px',
-            color: '#9e1717',
+            fontSize: '30px',
+            color: '#ffffff',
             align: 'right',
             padding: {
               top: 5,
@@ -41,11 +41,7 @@ class Menu extends Phaser.Scene {
         this.add.image(0,0, 'menu').setOrigin(0,0);
 
         // show menu text
-        //this.add.text(game.config.width/2, game.config.height/2 - borderUISize * 2 - borderPadding * 2, 'Endless Color Rush', menuConfig).setOrigin(0.5);
-        //this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press ← arrow to start the game', menuConfig).setOrigin(0.5);
-        //this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding * 5, 'Press → arrow for controls', menuConfig).setOrigin(0.5);
-        this.highScoreText = this.add.text(game.config.width/2 + borderUISize * 3, game.config.height/2 + borderUISize + borderPadding * 6.4, highScore, menuConfig).setOrigin(0.5);
-        //this.add.text(game.config.width/2, game.config.height/2 + borderUISize*3 + borderPadding * 7, 'Press R to reset High Score', menuConfig).setOrigin(0.5);
+        this.highScoreText = this.add.text(game.config.width/2 + borderUISize * 1.7, game.config.height/2 + borderUISize + borderPadding * 1.2, highScore, menuConfig).setOrigin(0.5);
 
 
         // define keys

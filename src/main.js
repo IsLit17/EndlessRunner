@@ -3,6 +3,16 @@
 //Title: Zombie Runner
 //Published: 05/01/2022
 
+// Technically Interesting Features
+//Our team are proud of item bag system. We all not familar with Phaser, so we used array instead of group. This game has three portable items which semi-permenantly give effects to players until they hold them. 
+//When the players hit the zombies, the hold items will be lost randomly. Two same items can not be holden, and the item bag can only hold two. Phaser.Utils.Array method doesn't have search to find duplicating items so we create function to implement it  
+//The holy cross is powerful item which earns 20 points in score but it doesn't have permenant effect, which means holding this item prevent getting other portable items. This leads player not only to dodge zombies but also to hit them to abandon the cross.
+//Players must choose between more points or stable play, which leads strategic action, considering when to get the generated item and how to dodge flocking zombies.
+//Other proud thing is High Score implementation. We implemented locally saved score using localStorage. It prevents high score from reset when player refresh the game.
+
+// Artistically Interesting Features
+// There are not a lot of endless runners that attempt a horror theme, and our game 
+
 let config = {
     type: Phaser.CANVAS,
     width: 640,
@@ -69,9 +79,3 @@ let distance = 32; //base distance
 // score
 let timerText, timerEvent;
 let highScore = localStorage.getItem("highStorage");
-
-//Our team are proud of item bag system. We all not familar with Phaser, so we used array instead of group. This game has three portable items which semi-permenantly give effects to players until they hold them. 
-//When the players hit the zombies, the hold items will be lost randomly. Two same items can not be holden, and the item bag can only hold two. Phaser.Utils.Array method doesn't have search to find duplicating items so we create function to implement it  
-//The holy cross is powerful item which earns 20 points in score but it doesn't have permenant effect, which means holding this item prevent getting other portable items. This leads player not only to dodge zombies but also to hit them to abandon the cross.
-//Players must choose between more points or stable play, which leads strategic action, considering when to get the generated item and how to dodge flocking zombies.
-//Other proud thing is High Score implementation. We implemented locally saved score using localStorage. It prevents high score from reset when player refresh the game. 

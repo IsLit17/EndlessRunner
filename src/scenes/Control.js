@@ -14,20 +14,7 @@ class Control extends Phaser.Scene {
         this.bgm.play();
         this.bgm.loop = true;
 
-        // menu text configuration
-        let menuConfig = {
-            fontFamily: 'Courier',
-            fontSize: '20px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
-            align: 'right',
-            padding: {
-              top: 5,
-              bottom: 5,
-            },
-            fixedWidth: 0
-        }
-
+        // background
         this.add.image(0,0, 'control').setOrigin(0,0);
 
         // define keys

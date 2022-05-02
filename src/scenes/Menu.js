@@ -51,7 +51,8 @@ class Menu extends Phaser.Scene {
         }
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             localStorage.setItem("highStorage", 0);
-            this.highScoreText.text = localStorage.getItem("highStorage");
+            highScore = localStorage.getItem("highStorage");
+            this.highScoreText.text = highScore;
         }
     }
 }

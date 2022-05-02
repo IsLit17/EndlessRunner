@@ -184,6 +184,7 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item3':
                         console.log(this.item.texture.key);
+                        this.sound.play('salt_armor');
                         if(!itemSearch('\nSalt Armor') && itemStack.length < 2){
                             itemStack.push('\nSalt Armor');
                             this.itemState.text = 'Equipment:' + itemStack;
@@ -191,6 +192,7 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item4':
                         console.log(this.item.texture.key);
+                        this.sound.play('holy_cross');
                         if(!itemSearch('\nHoly Cross') && itemStack.length < 2){
                             itemStack.push('\nHoly Cross');
                             this.itemState.text = 'Equipment:' + itemStack;

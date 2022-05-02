@@ -30,7 +30,7 @@ class Play extends Phaser.Scene {
     create() {
 
         // background music
-        this.bgm = this.sound.add('bgm');
+        this.bgm = this.sound.add('bgm', {volume: 0.5});
         this.bgm.play();
         this.bgm.loop = true;
 
@@ -261,6 +261,7 @@ class Play extends Phaser.Scene {
         }
     }
     playSplatter(enem) {
+        this.sound.play('enemyHit', {volume: 2.0});
         enem.alpha = 0;
         let blood = this.add.sprite(enem.x, enem.y, 'splatter').setOrigin(0, 0);
         blood.anims.play('splatter');

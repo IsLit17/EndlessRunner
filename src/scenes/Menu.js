@@ -11,6 +11,7 @@ class Menu extends Phaser.Scene {
         this.load.audio('boots_pickup', './assets/Boots_Pickup.wav');
         this.load.audio('holy_cross', './assets/Holy_Cross.wav');
         this.load.audio('salt_armor', './assets/salt_armor.wav');
+        this.load.audio('enemyHit', './assets/enemyHit.wav');
         this.load.audio('bgm', './assets/bgm.wav');
 
         //load image

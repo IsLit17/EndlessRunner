@@ -202,7 +202,7 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item2':
                         //console.log(this.item.texture.key);
-                        this.sound.play('health_increase');
+                        this.sound.play('health_increase', {volume: 0.80});
                         this.increaseHealth(this.player);
                         break;
                     case 'item3':

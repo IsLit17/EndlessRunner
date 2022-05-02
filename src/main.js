@@ -1,7 +1,7 @@
 
 //Zachary Hollaway, Sheel Kulkarni, Louis Lim
 //Title: Zombie Runner
-//Published: 05/01/2022
+//Published: 05/02/2022
 
 // Technical Tilt Justification
 //Our team are proud of item bag system. We all not familar with Phaser, so we used array instead of group. This game has three portable items which semi-permenantly give effects to players until they hold them. 
@@ -17,6 +17,7 @@
 //When the player hits a zombie, a blood splatter effect is played and the player sprite is grayed out for a few seconds, representing the fact that the player just lost health and an item. This feature also took some time to create.
 //When the player hits a health item, a green animation is played if the health score is increased.
 //We also have sound effects for each item and when the player hits a zombie. We also have background music that represents the haunted theme of the game.
+//If the item bag or health is full then a different sound effect is played, indicating that no upgrade is recieved.
 
 let config = {
     type: Phaser.CANVAS,

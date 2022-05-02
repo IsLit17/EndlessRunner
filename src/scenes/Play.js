@@ -206,7 +206,6 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item2':
                         //console.log(this.item.texture.key);
-                        this.sound.play('health_increase', {volume: 0.80});
                         this.increaseHealth(this.player);
                         break;
                     case 'item3':
@@ -273,11 +272,14 @@ class Play extends Phaser.Scene {
 
     increaseHealth(player) {
         if (this.health < maxHealth) {
+            this.sound.play('health_increase', {volume: 0.80});
             let hsound = this.add.sprite(player.x, player.y, 'healthAnim').setOrigin(0, 0.5);
             hsound.anims.play('healthAnim');
             hsound.on('animationcomplete', () => {
                 hsound.destroy();
             });
+        } else {
+            this.sound.play('fullbag');
         }
         this.health += 1;
         if (this.health >= maxHealth) {

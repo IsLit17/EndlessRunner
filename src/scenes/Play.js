@@ -171,6 +171,7 @@ class Play extends Phaser.Scene {
                 switch(this.item.texture.key){
                     case 'item1':
                         console.log(this.item.texture.key);
+                        this.sound.play('boots_pickup');
                         if(!itemSearch('\nMagic Shoes') && itemStack.length < 2 ){
                             itemStack.push('\nMagic Shoes');
                             this.itemState.text = 'Equipment:' + itemStack;
@@ -178,6 +179,7 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item2':
                         console.log(this.item.texture.key);
+                        this.sound.play('health_increase');
                         this.increaseHealth();
                         break;
                     case 'item3':

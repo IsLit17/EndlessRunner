@@ -4,6 +4,9 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
+        this.load.audio('health_increase', './assets/healthIncrease.wav');
+        this.load.audio('gameOver', './assets/gameOver.wav');
+        this.load.audio('boots_pickup', './assets/Boots_Pickup.wav');
         this.load.image('menu', './assets/MenuScreen.png');
     }
 

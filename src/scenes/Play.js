@@ -25,6 +25,7 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('playerAnim', './assets/playerAnim.png', {frameWidth: 26, frameHeight: 48, startFrame: 0, endFrame: 5});
         this.load.spritesheet('splatter', './assets/splatter.png', {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 7});
         this.load.spritesheet('zombieAnim', './assets/zombieAnim.png', {frameWidth: 20, frameHeight: 32, startFrame: 0, endFrame: 8});
+        this.load.spritesheet('healthAnim', './assets/healthAnim.png', {frameWidth: 26, frameHeight: 48, startFrame: 0, endFrame: 5});
     }
 
     create() {
@@ -87,6 +88,12 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('playerAnim', { start: 0, end: 5, first: 0}),
             frameRate: 15,
             repeat: -1
+        });
+        
+        this.anims.create({
+            key: 'healthAnim',
+            frames: this.anims.generateFrameNumbers('healthAnim', { start: 0, end: 5, first: 0}),
+            frameRate: 15
         });
 
         // create player sprite
@@ -196,7 +203,7 @@ class Play extends Phaser.Scene {
                     case 'item2':
                         //console.log(this.item.texture.key);
                         this.sound.play('health_increase');
-                        this.increaseHealth();
+                        this.increaseHealth(this.player);
                         break;
                     case 'item3':
                         //console.log(this.item.texture.key);
@@ -247,7 +254,14 @@ class Play extends Phaser.Scene {
         this.healthBar.setTexture('health' + this.health);
     }
 
-    increaseHealth() {
+    increaseHealth(player) {
+        if (this.health < maxHealth) {
+            let hsound = this.add.sprite(player.x, player.y, 'healthAnim').setOrigin(0, 0);
+            hsound.anims.play('healthAnim');
+            hsound.on('animationcomplete', () => {
+                hsound.destroy();
+            });
+        }
         this.health += 1;
         if (this.health >= maxHealth) {
             this.health = maxHealth;

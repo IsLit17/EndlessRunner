@@ -93,7 +93,7 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'healthAnim',
             frames: this.anims.generateFrameNumbers('healthAnim', { start: 0, end: 5, first: 0}),
-            frameRate: 15
+            frameRate: 10
         });
 
         // create player sprite
@@ -206,7 +206,7 @@ class Play extends Phaser.Scene {
                         break;
                     case 'item2':
                         //console.log(this.item.texture.key);
-                        this.sound.play('health_increase');
+                        this.sound.play('health_increase', {volume: 0.80});
                         this.increaseHealth(this.player);
                         break;
                     case 'item3':
@@ -273,7 +273,7 @@ class Play extends Phaser.Scene {
 
     increaseHealth(player) {
         if (this.health < maxHealth) {
-            let hsound = this.add.sprite(player.x, player.y, 'healthAnim').setOrigin(0, 0);
+            let hsound = this.add.sprite(player.x, player.y, 'healthAnim').setOrigin(0, 0.5);
             hsound.anims.play('healthAnim');
             hsound.on('animationcomplete', () => {
                 hsound.destroy();

@@ -51,7 +51,7 @@ class Play extends Phaser.Scene {
 
         // display health
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Chiller',
             fontSize: '28px',
             color: '#b71c1c',
             align: 'center',
@@ -85,7 +85,7 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'playerAnim',
             frames: this.anims.generateFrameNumbers('playerAnim', { start: 0, end: 5, first: 0}),
-            frameRate: 10,
+            frameRate: 15,
             repeat: -1
         });
 
@@ -116,10 +116,10 @@ class Play extends Phaser.Scene {
         // timer/score
         timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTime, callbackScope: this, loop: true });
         this.curTime = 0;
-        timerText = this.add.text(game.config.width/2, borderUISize + borderPadding, 'Score: 0', { fontSize: '20px', fill: '#ffffff' });
+        timerText = this.add.text(game.config.width/2.5, borderUISize + borderPadding, 'Score: 0', { fontFamily: 'Chiller', fontSize: '25px', fill: '#ffffff' });
 
         this.time.addEvent({delay: 10000,callback: function(){this.speed *= 1.2; this.backgroundSpeed *= 1.2}, callbackScope: this, loop: true }); // enemies speed up overtime
-        this.itemState = this.add.text(0, borderUISize + borderPadding, 'Equipment:', { fontSize: '20px', fill: '#ffffff' }); //item bag
+        this.itemState = this.add.text(0, borderUISize + borderPadding, 'Equipment:', { fontFamily: 'Chiller', fontSize: '25px', fill: '#ffffff' }); //item bag
     }
 
     update() {
@@ -131,6 +131,7 @@ class Play extends Phaser.Scene {
                 localStorage.setItem("highStorage", score);
                 highScore = localStorage.getItem("highStorage");
             }
+            timerText.setVisible(false);
             this.add.text(game.config.width/2, game.config.height/2 - 80, 'GAME OVER', gameConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 - 8, 'Score: ' + score, gameConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'High Score: ' + highScore, gameConfig).setOrigin(0.5);

@@ -4,6 +4,11 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
+
+        //load audio
+        this.load.audio('bgm', './assets/bgm.wav');
+
+        //load images
         this.load.image('background', './assets/background.png');
         this.load.image('player', './assets/player.png');
         this.load.image('enemy', './assets/zombie.png');
@@ -15,12 +20,20 @@ class Play extends Phaser.Scene {
         this.load.image('health1', './assets/healthBar1.png');
         this.load.image('health2', './assets/healthBar2.png');
         this.load.image('health3', './assets/healthBar3.png');
+
+        //load spritesheet
         this.load.spritesheet('playerAnim', './assets/playerAnim.png', {frameWidth: 26, frameHeight: 48, startFrame: 0, endFrame: 5});
         this.load.spritesheet('splatter', './assets/splatter.png', {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 7});
         this.load.spritesheet('zombieAnim', './assets/zombieAnim.png', {frameWidth: 20, frameHeight: 32, startFrame: 0, endFrame: 8});
     }
 
     create() {
+
+        // background music
+        this.bgm = this.sound.add('bgm');
+        this.bgm.play();
+        this.bgm.loop = true;
+
         this.backgroundSpeed = 1.5;
         this.minEnemies = 6;
         this.numEnemies = 20;
@@ -112,6 +125,7 @@ class Play extends Phaser.Scene {
     update() {
         // when game is over
         if (this.gameOver) {
+            this.bgm.stop();
             let score = this.curTime;
             if (score > highScore) {
                 localStorage.setItem("highStorage", score);

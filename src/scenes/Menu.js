@@ -4,15 +4,26 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
+
+        // load audio
         this.load.audio('health_increase', './assets/healthIncrease.wav');
         this.load.audio('gameOver', './assets/gameOver.wav');
         this.load.audio('boots_pickup', './assets/Boots_Pickup.wav');
         this.load.audio('holy_cross', './assets/Holy_Cross.wav');
         this.load.audio('salt_armor', './assets/salt_armor.wav');
+        this.load.audio('bgm', './assets/bgm.wav');
+
+        //load image
         this.load.image('menu', './assets/MenuScreen.png');
     }
 
     create() {
+
+        // background music
+        this.bgm = this.sound.add('bgm');
+        this.bgm.play();
+        this.bgm.loop = true;
+
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Chiller',
@@ -45,9 +56,12 @@ class Menu extends Phaser.Scene {
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start('playScene');
+            this.bgm.stop();
+            
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
             this.scene.start('controlScene');
+            this.bgm.stop();
         }
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             localStorage.setItem("highStorage", 0);

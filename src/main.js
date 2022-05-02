@@ -24,7 +24,7 @@ let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
 
 // define keys
-let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyR;
+let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyR, keyE;
 // maximum health
 let maxHealth = 3;
 

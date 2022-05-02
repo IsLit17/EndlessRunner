@@ -170,7 +170,7 @@ class Play extends Phaser.Scene {
             if(this.checkCollision(this.player, this.item)){
                 switch(this.item.texture.key){
                     case 'item1':
-                        console.log(this.item.texture.key);
+                        //console.log(this.item.texture.key);
                         this.sound.play('boots_pickup');
                         if(!itemSearch('\nMagic Shoes') && itemStack.length < 2 ){
                             itemStack.push('\nMagic Shoes');
@@ -178,12 +178,12 @@ class Play extends Phaser.Scene {
                         }
                         break;
                     case 'item2':
-                        console.log(this.item.texture.key);
+                        //console.log(this.item.texture.key);
                         this.sound.play('health_increase');
                         this.increaseHealth();
                         break;
                     case 'item3':
-                        console.log(this.item.texture.key);
+                        //console.log(this.item.texture.key);
                         this.sound.play('salt_armor');
                         if(!itemSearch('\nSalt Armor') && itemStack.length < 2){
                             itemStack.push('\nSalt Armor');
@@ -191,7 +191,7 @@ class Play extends Phaser.Scene {
                         }
                         break;
                     case 'item4':
-                        console.log(this.item.texture.key);
+                        //console.log(this.item.texture.key);
                         this.sound.play('holy_cross');
                         if(!itemSearch('\nHoly Cross') && itemStack.length < 2){
                             itemStack.push('\nHoly Cross');
